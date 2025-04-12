@@ -1,6 +1,8 @@
 using Aplicatie_Transporturi.Entities;
-
-public interface ITokenService
+namespace Aplicatie_Transporturi.Interfaces
 {
-    string CreateToken(AppUser user);
+    public interface ITokenService
+    {
+        string CreateToken(AppUser user);
+    }
 }

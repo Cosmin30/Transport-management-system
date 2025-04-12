@@ -1,6 +1,10 @@
-public interface IDriverRepository
+using Aplicatie_Transporturi.Entities;
+namespace Aplicatie_Transporturi.Interfaces
 {
-    Task<IEnumerable<Driver>> GetDriversAsync();
-    Task AddDriverAsync(Driver driver);
-    Task DeleteDriverAsync(int id);
+    public interface IDriverRepository
+    {
+        Task<IEnumerable<Driver>> GetDriversAsync();
+        Task AddDriverAsync(Driver driver);
+        Task DeleteDriverAsync(int id);
+    }
 }

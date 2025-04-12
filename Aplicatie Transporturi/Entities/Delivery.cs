@@ -6,7 +6,7 @@ public class Delivery
     public string PickupLocation { get; set; }
     public string DropoffLocation { get; set; }
     public DateTime ScheduledDate { get; set; }
-    public string Status { get; set; } = "Planned"; // Planned, InProgress, Completed
+    public string Status { get; set; } = "Planned"; 
 
     public int? VehicleId { get; set; }
     public Vehicle Vehicle { get; set; }

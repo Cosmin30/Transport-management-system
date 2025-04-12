@@ -1,6 +1,9 @@
-public class VehicleDto
+namespace Aplicatie_Transporturi.DTOs
 {
-    public string LicensePlate { get; set; }
-    public string Model { get; set; }
-    public int Year { get; set; }
+    public class VehicleDto
+    {
+        public string LicensePlate { get; set; }
+        public string Model { get; set; }
+        public int Year { get; set; }
+    }
 }

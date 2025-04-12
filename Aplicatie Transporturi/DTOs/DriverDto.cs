@@ -1,5 +1,8 @@
-public class DriverDto
+namespace Aplicatie_Transporturi.DTOs
 {
-    public string Name { get; set; }
-    public string LicenseNumber { get; set; }
+    public class DriverDto
+    {
+        public string Name { get; set; }
+        public string LicenseNumber { get; set; }
+    }
 }

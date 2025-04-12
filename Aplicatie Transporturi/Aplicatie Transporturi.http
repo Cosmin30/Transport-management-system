@@ -1,11 +1,9 @@
-@Aplicatie_Transporturi_HostAddress = http://localhost:5084
+@TransportApiHost = https://localhost:5001
 
-GET {{Aplicatie_Transporturi_HostAddress}}/todos/
+GET {{TransportApiHost}}/api/vehicles
 Accept: application/json
 
 ###
 
-GET {{Aplicatie_Transporturi_HostAddress}}/todos/1
+GET {{TransportApiHost}}/api/vehicles/1
 Accept: application/json
-
-###

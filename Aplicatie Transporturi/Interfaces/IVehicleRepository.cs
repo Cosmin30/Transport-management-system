@@ -1,8 +1,10 @@
 using Aplicatie_Transporturi.Entities;
-
-public interface IVehicleRepository
+namespace Aplicatie_Transporturi.Interfaces
 {
-    Task<IEnumerable<Vehicle>> GetVehiclesAsync();
-    Task AddVehicleAsync(Vehicle vehicle);
-    Task DeleteVehicleAsync(int id);
+    public interface IVehicleRepository
+    {
+        Task<IEnumerable<Vehicle>> GetVehiclesAsync();
+        Task AddVehicleAsync(Vehicle vehicle);
+        Task DeleteVehicleAsync(int id);
+    }
 }
