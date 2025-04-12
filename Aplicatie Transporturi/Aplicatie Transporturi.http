@@ -1,0 +1,11 @@
+@Aplicatie_Transporturi_HostAddress = http://localhost:5084
+
+GET {{Aplicatie_Transporturi_HostAddress}}/todos/
+Accept: application/json
+
+###
+
+GET {{Aplicatie_Transporturi_HostAddress}}/todos/1
+Accept: application/json
+
+###
