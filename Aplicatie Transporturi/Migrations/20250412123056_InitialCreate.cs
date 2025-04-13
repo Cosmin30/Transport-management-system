@@ -25,7 +25,7 @@ namespace Aplicatie_Transporturi.Migrations
                 {
                     table.PrimaryKey("PK_Drivers", x => x.Id);
                 });
-
+            
             migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new

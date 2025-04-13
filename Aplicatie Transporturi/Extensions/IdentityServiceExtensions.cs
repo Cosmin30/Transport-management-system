@@ -10,7 +10,13 @@ namespace Aplicatie_Transporturi.Extensions
     {
         public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration config)
         {
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["TokenKey"]));
+            var tokenKey = config["TokenKey"];
+            if (string.IsNullOrEmpty(tokenKey))
+            {
+                throw new ArgumentNullException(nameof(config), "TokenKey is not configured in the application settings.");
+            }
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenKey));
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>

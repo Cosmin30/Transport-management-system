@@ -1,0 +1,11 @@
+<h2>Lista Vehicule</h2>
+
+<ul *ngIf="vehicles.length > 0; else noData">
+  <li *ngFor="let v of vehicles">
+    {{ v.licensePlate }} - {{ v.model }} ({{ v.year }})
+  </li>
+</ul>
+
+<ng-template #noData>
+  <p>Nu există vehicule înregistrate.</p>
+</ng-template>

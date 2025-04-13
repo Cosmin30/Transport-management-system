@@ -1,0 +1,30 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm px-3">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold fs-4" routerLink="/">Transport Management</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+      aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="mainNavbar">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/vehicles" routerLinkActive="active">Vehicule</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/drivers" routerLinkActive="active">Șoferi</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/deliveries" routerLinkActive="active">Curse</a>
+        </li>
+      </ul>
+
+      <div class="d-flex">
+        <a class="btn btn-outline-light btn-sm" routerLink="/auth">
+          <i class="bi bi-box-arrow-in-right me-1"></i> Login
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>

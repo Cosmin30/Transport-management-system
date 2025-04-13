@@ -2,7 +2,7 @@ using Aplicatie_Transporturi.Data;
 using Aplicatie_Transporturi.Entities;
 using Aplicatie_Transporturi.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Aplicatie_Transporturi.Interfaces;
+
 namespace Aplicatie_Transporturi.Repositories
 {
     public class DriverRepository : IDriverRepository
