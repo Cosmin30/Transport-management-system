@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35828.75 d17.13
+VisualStudioVersion = 17.13.35828.75
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aplicatie Transporturi", "Aplicatie Transporturi\Aplicatie Transporturi.csproj", "{25AEA711-CBA3-480E-A763-CA2D2F1E2F75}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AplicatieTransporturi", "Aplicatie Transporturi\AplicatieTransporturi.csproj", "{25AEA711-CBA3-480E-A763-CA2D2F1E2F75}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
