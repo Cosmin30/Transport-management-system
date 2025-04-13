@@ -1,7 +1,7 @@
 [build]
-  base    = "frontend"
+  base    = "Aplicatie Transporturi/Aplicatie Transporturi/frontend"
   command = "npm run build"
-  publish = "build"  # sau "dist", depinde de framework
+  publish = "Aplicatie Transporturi/Aplicatie Transporturi/frontend/dist/frontend"
 
 [[redirects]]
   from = "/*"
