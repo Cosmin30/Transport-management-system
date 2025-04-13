@@ -1,0 +1,46 @@
+<div class="home-container text-center" [@fadeIn]>
+    <h1>Bine ai venit la <span class="brand">Transport Management</span></h1>
+    <p class="lead">Gestionează eficient vehiculele, șoferii și cursele!</p>
+  
+    <div class="section">
+      <h2>Ultimele Vehicule</h2>
+      <div class="row">
+        <div class="col-md-4" *ngFor="let v of vehicles.slice(0, 3)">
+          <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">{{ v.name || v.model }}</h5>
+              <p class="card-text">Nr. înmatriculare: {{ v.plateNumber }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="section">
+      <h2>Ultimii Șoferi</h2>
+      <div class="row">
+        <div class="col-md-4" *ngFor="let d of drivers.slice(0, 3)">
+          <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">{{ d.name }}</h5>
+              <p class="card-text">Categorie permis: {{ d.licenseCategory }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="section">
+      <h2>Ultimele Curse</h2>
+      <div class="row">
+        <div class="col-md-4" *ngFor="let c of deliveries.slice(0, 3)">
+          <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">Destinație: {{ c.destination }}</h5>
+              <p class="card-text">Data: {{ c.date | date }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

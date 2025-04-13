@@ -7,13 +7,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add controllers
 builder.Services.AddControllers();
+
+// CORS configuration (added BEFORE builder.Build())
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAngular", policy =>
+    options.AddPolicy("AllowAll", policy =>
     {
-        policy.WithOrigins("http://localhost:4200") 
-              .AllowAnyHeader()
-              .AllowAnyMethod();
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
     });
 });
 
@@ -48,13 +50,7 @@ if (app.Environment.IsDevelopment())
 
 // Middleware
 app.UseHttpsRedirection();
-app.UseHttpsRedirection();
-
-app.UseCors("AllowAngular"); 
-
-app.UseAuthentication();
-app.UseAuthorization();
-
+app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization();
 
