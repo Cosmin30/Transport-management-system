@@ -1,0 +1,17 @@
+html, body {
+    height: 100%;
+  }
+  body {
+    display: flex;
+    flex-direction: column;
+  }
+  app-root {
+    flex: 1;
+  }
+  footer {
+    font-size: 0.9rem;
+  }
+  footer a:hover {
+    color: #ffc107 !important;
+  }
+  
