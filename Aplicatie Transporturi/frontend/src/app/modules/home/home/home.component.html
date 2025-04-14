@@ -1,46 +1,53 @@
 <div class="home-container text-center" [@fadeIn]>
-    <h1>Bine ai venit la <span class="brand">Transport Management</span></h1>
-    <p class="lead">Gestionează eficient vehiculele, șoferii și cursele!</p>
-  
-    <div class="section">
-      <h2>Ultimele Vehicule</h2>
-      <div class="row">
-        <div class="col-md-4" *ngFor="let v of vehicles.slice(0, 3)">
-          <div class="card mb-4 shadow-sm">
-            <div class="card-body">
-              <h5 class="card-title">{{ v.name || v.model }}</h5>
-              <p class="card-text">Nr. înmatriculare: {{ v.plateNumber }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  
-    <div class="section">
-      <h2>Ultimii Șoferi</h2>
-      <div class="row">
-        <div class="col-md-4" *ngFor="let d of drivers.slice(0, 3)">
-          <div class="card mb-4 shadow-sm">
-            <div class="card-body">
-              <h5 class="card-title">{{ d.name }}</h5>
-              <p class="card-text">Categorie permis: {{ d.licenseCategory }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  
-    <div class="section">
-      <h2>Ultimele Curse</h2>
-      <div class="row">
-        <div class="col-md-4" *ngFor="let c of deliveries.slice(0, 3)">
-          <div class="card mb-4 shadow-sm">
-            <div class="card-body">
-              <h5 class="card-title">Destinație: {{ c.destination }}</h5>
-              <p class="card-text">Data: {{ c.date | date }}</p>
-            </div>
+  <h1>Bine ai venit la <span class="brand">Transport Management</span></h1>
+  <p class="lead">Gestionează eficient vehiculele, șoferii și cursele!</p>
+
+  <div class="section">
+    <h2>Ultimele Vehicule</h2>
+    <div class="row justify-content-center">
+      <div class="col-md-4" *ngFor="let v of vehicles.slice(-3).reverse()">
+        <div class="card mb-4 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">{{ v.model }}</h5>
+            <p class="card-text">Nr. înmatriculare: {{ v.licensePlate }}</p>
+            <p class="card-text">An: {{ v.year }}</p>
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  <div class="section">
+    <h2>Ultimii Șoferi</h2>
+    <div class="row justify-content-center">
+      <div class="col-md-4" *ngFor="let d of drivers.slice(-3).reverse()">
+        <div class="card mb-4 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">{{ d.name }}</h5>
+            <p class="card-text">Permis: {{ d.licenseNumber }}</p>
+            <p class="card-text">Disponibil: 
+              <span [class.text-success]="d.isAvailable" [class.text-danger]="!d.isAvailable">
+                {{ d.isAvailable ? 'Da' : 'Nu' }}
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Ultimele Curse</h2>
+    <div class="row justify-content-center">
+      <div class="col-md-4" *ngFor="let c of deliveries.slice(-3).reverse()">
+        <div class="card mb-4 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">{{ c.pickupLocation }} → {{ c.dropoffLocation }}</h5>
+            <p class="card-text">Data programată: {{ c.scheduledDate | date:'dd/MM/yyyy HH:mm' }}</p>
+            <p class="card-text">Status: {{ c.status }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

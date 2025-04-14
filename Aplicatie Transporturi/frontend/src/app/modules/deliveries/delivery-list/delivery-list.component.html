@@ -1,18 +1,36 @@
-<div class="delivery-list">
-  <h2>Lista curselor</h2>
+<h2 class="text-center mb-4 text-info">Lista Curselor</h2>
 
-  <div *ngIf="deliveries.length === 0" class="alert alert-info">
-    Nu există curse disponibile momentan.
+<div *ngIf="loading" class="text-center">
+  <div class="spinner-border text-info" role="status">
+    <span class="visually-hidden">Se încarcă...</span>
   </div>
+</div>
 
-  <div class="row" *ngIf="deliveries.length > 0">
-    <div class="col-md-4 mb-4" *ngFor="let c of deliveries">
-      <div class="card shadow-sm h-100">
-        <div class="card-body">
-          <h5 class="card-title">Destinație: {{ c.destination }}</h5>
-          <p class="card-text">Data: {{ c.date | date: 'dd/MM/yyyy HH:mm' }}</p>
-        </div>
+<div *ngIf="error" class="alert alert-danger text-center">
+  {{ error }}
+</div>
+
+<div class="row" *ngIf="deliveries.length > 0 && !loading && !error; else noData">
+  <div class="col-md-6 mb-4" *ngFor="let d of deliveries">
+    <div class="card shadow-sm h-100 border-info">
+      <div class="card-body">
+        <h5 class="card-title"><i class="bi bi-truck me-2"></i>{{ d.pickupLocation }} → {{ d.dropoffLocation }}</h5>
+        <p class="card-text">
+          <strong>Data:</strong> {{ d.scheduledDate | date:'dd/MM/yyyy HH:mm' }}<br>
+          <strong>Status:</strong>
+          <span [ngClass]="{
+            'text-warning': d.status === 'Planned',
+            'text-primary': d.status === 'InProgress',
+            'text-success': d.status === 'Completed'
+          }">{{ d.status }}</span><br>
+          <strong>Șofer:</strong> {{ d.driver?.name || 'Nealocat' }}<br>
+          <strong>Vehicul:</strong> {{ d.vehicle?.licensePlate || 'Nealocat' }}
+        </p>
       </div>
     </div>
   </div>
 </div>
+
+<ng-template #noData>
+  <p class="alert alert-info text-center">Nu există curse înregistrate.</p>
+</ng-template>

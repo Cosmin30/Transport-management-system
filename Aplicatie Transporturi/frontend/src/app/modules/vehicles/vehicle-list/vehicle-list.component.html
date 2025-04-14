@@ -1,11 +1,25 @@
-<h2>Lista Vehicule</h2>
+<h2 class="text-center mb-4 text-success">Lista Vehicule</h2>
 
-<ul *ngIf="vehicles.length > 0; else noData">
-  <li *ngFor="let v of vehicles">
-    {{ v.licensePlate }} - {{ v.model }} ({{ v.year }})
-  </li>
-</ul>
+<div class="row" *ngIf="vehicles.length > 0; else noData">
+  <div class="col-md-4 mb-4" *ngFor="let v of vehicles">
+    <div class="card shadow-sm h-100 border-success">
+      <div class="card-body">
+        <h5 class="card-title">
+          <i class="bi bi-truck-front-fill me-2"></i>{{ v.licensePlate }}
+        </h5>
+        <p class="card-text">
+          <strong>Model:</strong> {{ v.model }}<br>
+          <strong>An fabricație:</strong> {{ v.year }}<br>
+          <strong>Disponibil:</strong>
+          <span [class.text-success]="v.isAvailable" [class.text-danger]="!v.isAvailable">
+            {{ v.isAvailable ? 'Da' : 'Nu' }}
+          </span>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
 
 <ng-template #noData>
-  <p>Nu există vehicule înregistrate.</p>
+  <p class="alert alert-warning text-center">Nu există vehicule înregistrate.</p>
 </ng-template>
