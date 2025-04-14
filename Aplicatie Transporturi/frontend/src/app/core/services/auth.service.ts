@@ -1,20 +1,52 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { Observable, BehaviorSubject, tap } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class AuthService {
-  baseUrl = environment.apiUrl + 'account/';
+  private baseUrl = 'https://localhost:5001/api/auth';
+
+  // ✅ Asigură-te că nu accesezi localStorage în afara browserului
+  private userSubject = new BehaviorSubject<string | null>(
+    typeof window !== 'undefined' ? localStorage.getItem('username') : null
+  );
+  user$ = this.userSubject.asObservable();
 
   constructor(private http: HttpClient) {}
 
-  login(model: any) {
-    return this.http.post(this.baseUrl + 'login', model);
+  login(data: { username: string; password: string }): Observable<any> {
+    return this.http.post(`${this.baseUrl}/login`, data).pipe(
+      tap((res: any) => {
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('token', res.token);
+          localStorage.setItem('username', res.username);
+        }
+        this.userSubject.next(res.username);
+      })
+    );
   }
 
-  register(model: any) {
-    return this.http.post(this.baseUrl + 'register', model);
+  register(data: { username: string; password: string }): Observable<any> {
+    return this.http.post(`${this.baseUrl}/register`, data).pipe(
+      tap((res: any) => {
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('token', res.token);
+          localStorage.setItem('username', res.username);
+        }
+        this.userSubject.next(res.username);
+      })
+    );
+  }
+
+  logout(): void {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('token');
+      localStorage.removeItem('username');
+    }
+    this.userSubject.next(null);
+  }
+
+  isAuthenticated(): boolean {
+    return typeof window !== 'undefined' && !!localStorage.getItem('token');
   }
 }

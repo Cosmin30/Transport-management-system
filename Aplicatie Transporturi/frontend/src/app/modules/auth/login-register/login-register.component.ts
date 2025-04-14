@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from 'src/app/core/services/auth.service'; 
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-login-register',
@@ -11,11 +12,11 @@ import { AuthService } from 'src/app/core/services/auth.service';
   styleUrls: ['./login-register.component.css']
 })
 export class LoginRegisterComponent {
-  isLogin = true; 
+  isLogin = true;
   loginData = { username: '', password: '' };
   registerData = { username: '', password: '', confirmPassword: '' };
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   toggleTab(): void {
     this.isLogin = !this.isLogin;
@@ -23,8 +24,11 @@ export class LoginRegisterComponent {
 
   login(): void {
     this.authService.login(this.loginData).subscribe({
-      next: () => alert('Autentificat cu succes!'),
-      error: (err) => alert('Eroare la login: ' + err.error)
+      next: () => {
+        alert('Autentificat cu succes!');
+        this.router.navigate(['/']); // ✅ Redirect către pagina principală
+      },
+      error: (err) => alert('Eroare la login: ' + (err.error || 'Serverul nu răspunde'))
     });
   }
 
@@ -34,8 +38,11 @@ export class LoginRegisterComponent {
     }
 
     this.authService.register(this.registerData).subscribe({
-      next: () => alert('Înregistrare reușită!'),
-      error: (err) => alert('Eroare la înregistrare: ' + err.error)
+      next: () => {
+        alert('Înregistrare reușită!');
+        this.isLogin = true;
+      },
+      error: (err) => alert('Eroare la înregistrare: ' + (err.error || 'Serverul nu răspunde'))
     });
   }
 }
