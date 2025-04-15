@@ -1,0 +1,62 @@
+// ✅ delivery-form.component.ts
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { DeliveryService } from 'src/app/core/services/delivery.service';
+
+@Component({
+  selector: 'app-delivery-form',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
+  templateUrl: './delivery-form.component.html',
+  styleUrls: ['./delivery-form.component.css']
+})
+export class DeliveryFormComponent implements OnInit {
+  form!: FormGroup;
+  isEditMode = false;
+  deliveryId: number | null = null;
+
+  constructor(
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private deliveryService: DeliveryService
+  ) {}
+
+  ngOnInit(): void {
+    this.form = this.fb.group({
+      pickupLocation: ['', Validators.required],
+      dropoffLocation: ['', Validators.required],
+      scheduledDate: ['', Validators.required],
+      status: ['Planned', Validators.required],
+      driverId: [null],
+      vehicleId: [null]
+    });
+
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.isEditMode = true;
+      this.deliveryId = +id;
+      this.deliveryService.getDeliveryById(this.deliveryId).subscribe(data => {
+        this.form.patchValue(data);
+      });
+    }
+  }
+
+  onSubmit(): void {
+    if (this.form.invalid) return;
+
+    const delivery = this.form.value;
+
+    if (this.isEditMode && this.deliveryId !== null) {
+      this.deliveryService.updateDelivery(this.deliveryId, delivery).subscribe(() => {
+        this.router.navigate(['/deliveries']);
+      });
+    } else {
+      this.deliveryService.addDelivery(delivery).subscribe(() => {
+        this.router.navigate(['/deliveries']);
+      });
+    }
+  }
+}

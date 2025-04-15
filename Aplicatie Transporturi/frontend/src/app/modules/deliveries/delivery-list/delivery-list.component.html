@@ -1,5 +1,9 @@
 <h2 class="text-center mb-4 text-info">Lista Curselor</h2>
 
+<div class="text-end mb-3">
+  <a routerLink="/deliveries/add" class="btn btn-success">Adaugă Cursă</a>
+</div>
+
 <div *ngIf="loading" class="text-center">
   <div class="spinner-border text-info" role="status">
     <span class="visually-hidden">Se încarcă...</span>
@@ -26,6 +30,11 @@
           <strong>Șofer:</strong> {{ d.driver?.name || 'Nealocat' }}<br>
           <strong>Vehicul:</strong> {{ d.vehicle?.licensePlate || 'Nealocat' }}
         </p>
+
+        <div class="d-flex justify-content-end gap-2">
+          <button class="btn btn-outline-primary btn-sm" (click)="editDelivery(d.id)">✏️ Editează</button>
+          <button class="btn btn-outline-danger btn-sm" (click)="deleteDelivery(d.id)">🗑️ Șterge</button>
+        </div>
       </div>
     </div>
   </div>
