@@ -16,15 +16,15 @@ export class DeliveryService {
   }
 
   getDeliveryById(id: number): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/${id}`);
+    return this.http.get(`/api/deliveries/${id}`);
   }
 
   addDelivery(delivery: any): Observable<any> {
-    return this.http.post(this.baseUrl, delivery);
+    return this.http.post(`/api/deliveries`, delivery);
   }
 
   updateDelivery(id: number, delivery: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/${id}`, delivery);
+    return this.http.put(`/api/deliveries/${id}`, delivery);
   }
 
   deleteDelivery(id: number): Observable<any> {

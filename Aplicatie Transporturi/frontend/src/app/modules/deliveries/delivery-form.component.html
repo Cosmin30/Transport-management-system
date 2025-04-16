@@ -1,45 +1,43 @@
-<!-- ✅ delivery-form.component.html -->
 <div class="container mt-4">
-    <h3 class="text-center">{{ isEditMode ? 'Editează Cursa' : 'Adaugă Cursă' }}</h3>
-  
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <div class="mb-3">
-        <label for="pickupLocation" class="form-label">Punct plecare</label>
-        <input id="pickupLocation" type="text" class="form-control" formControlName="pickupLocation" />
-      </div>
-  
-      <div class="mb-3">
-        <label for="dropoffLocation" class="form-label">Destinație</label>
-        <input id="dropoffLocation" type="text" class="form-control" formControlName="dropoffLocation" />
-      </div>
-  
-      <div class="mb-3">
-        <label for="scheduledDate" class="form-label">Data programată</label>
-        <input id="scheduledDate" type="datetime-local" class="form-control" formControlName="scheduledDate" />
-      </div>
-  
-      <div class="mb-3">
-        <label for="status" class="form-label">Status</label>
-        <select id="status" class="form-select" formControlName="status">
-          <option value="Planned">Planned</option>
-          <option value="InProgress">InProgress</option>
-          <option value="Completed">Completed</option>
-        </select>
-      </div>
-  
-      <div class="mb-3">
-        <label for="driverId" class="form-label">Șofer (ID)</label>
-        <input id="driverId" type="number" class="form-control" formControlName="driverId" />
-      </div>
-  
-      <div class="mb-3">
-        <label for="vehicleId" class="form-label">Vehicul (ID)</label>
-        <input id="vehicleId" type="number" class="form-control" formControlName="vehicleId" />
-      </div>
-  
-      <button class="btn btn-success" type="submit" [disabled]="form.invalid">
-        {{ isEditMode ? 'Salvează modificările' : 'Adaugă cursă' }}
-      </button>
-    </form>
-  </div>
-  
+  <h3 class="text-center">{{ isEditMode ? 'Editează Cursa' : 'Adaugă Cursă' }}</h3>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+      <label for="pickupLocation" class="form-label">Punct plecare</label>
+      <input id="pickupLocation" type="text" class="form-control" formControlName="pickupLocation" />
+    </div>
+
+    <div class="mb-3">
+      <label for="dropoffLocation" class="form-label">Destinație</label>
+      <input id="dropoffLocation" type="text" class="form-control" formControlName="dropoffLocation" />
+    </div>
+
+    <div class="mb-3">
+      <label for="scheduledDate" class="form-label">Data programată</label>
+      <input id="scheduledDate" type="datetime-local" class="form-control" formControlName="scheduledDate" />
+    </div>
+
+    <div class="mb-3">
+      <label for="status" class="form-label">Status</label>
+      <select id="status" class="form-select" formControlName="status">
+        <option value="Planned">Planned</option>
+        <option value="InProgress">InProgress</option>
+        <option value="Completed">Completed</option>
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="driverId" class="form-label">Șofer (ID)</label>
+      <input id="driverId" type="number" class="form-control" formControlName="driverId" />
+    </div>
+
+    <div class="mb-3">
+      <label for="vehicleId" class="form-label">Vehicul (ID)</label>
+      <input id="vehicleId" type="number" class="form-control" formControlName="vehicleId" />
+    </div>
+
+    <button class="btn btn-success" type="submit" [disabled]="form.invalid">
+      {{ isEditMode ? 'Salvează modificările' : 'Adaugă cursă' }}
+    </button>
+  </form>
+</div>

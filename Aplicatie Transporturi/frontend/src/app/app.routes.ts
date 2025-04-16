@@ -13,5 +13,16 @@ export const routes: Routes = [
   { path: 'deliveries', component: DeliveryListComponent },
   { path: 'deliveries/add', component: DeliveryFormComponent },     
   { path: 'deliveries/edit/:id', component: DeliveryFormComponent }, 
-  { path: 'auth', component: LoginRegisterComponent }
+  { path: 'auth', component: LoginRegisterComponent },
+  {
+    path: 'deliveries/add',
+    loadComponent: () =>
+      import('./modules/deliveries/delivery-form.component').then(m => m.DeliveryFormComponent)
+  },
+  {
+    path: 'deliveries/edit/:id',
+    loadComponent: () =>
+      import('./modules/deliveries/delivery-form.component').then(m => m.DeliveryFormComponent)
+  }
+
 ];

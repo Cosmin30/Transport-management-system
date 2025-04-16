@@ -1,4 +1,3 @@
-// ✅ delivery-form.component.ts
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -22,7 +21,7 @@ export class DeliveryFormComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private deliveryService: DeliveryService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -33,19 +32,32 @@ export class DeliveryFormComponent implements OnInit {
       driverId: [null],
       vehicleId: [null]
     });
-
+  
     const id = this.route.snapshot.paramMap.get('id');
+    console.log('ID din URL:', id); // 👈 vezi dacă ajunge
+  
     if (id) {
       this.isEditMode = true;
       this.deliveryId = +id;
+  
       this.deliveryService.getDeliveryById(this.deliveryId).subscribe(data => {
-        this.form.patchValue(data);
+        console.log('Date primite pentru edit:', data); // 👈 vezi dacă primești date
+  
+        const formattedDate = new Date(data.scheduledDate).toISOString().slice(0, 16);
+        this.form.patchValue({
+          ...data,
+          scheduledDate: formattedDate
+        });
       });
     }
   }
+  
 
   onSubmit(): void {
-    if (this.form.invalid) return;
+    if (this.form.invalid) {
+      console.warn('Form invalid:', this.form.value);
+      return;
+    }
 
     const delivery = this.form.value;
 
