@@ -17,11 +17,7 @@ export const routes: Routes = [
       import('./modules/deliveries/delivery-form.component').then(m => m.DeliveryFormComponent),
     data: { renderMode: 'default' } 
   },
-  {
-    path: 'deliveries/edit/:id',
-    loadComponent: () =>
-      import('./modules/deliveries/delivery-form.component').then(m => m.DeliveryFormComponent),
-    data: { renderMode: 'default' }
-  },
+
+  
   { path: 'auth', component: LoginRegisterComponent }
 ];
