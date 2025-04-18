@@ -11,18 +11,17 @@ export const routes: Routes = [
   { path: 'vehicles', component: VehicleListComponent },
   { path: 'drivers', component: DriverListComponent },
   { path: 'deliveries', component: DeliveryListComponent },
-  { path: 'deliveries/add', component: DeliveryFormComponent },     
-  { path: 'deliveries/edit/:id', component: DeliveryFormComponent }, 
-  { path: 'auth', component: LoginRegisterComponent },
   {
     path: 'deliveries/add',
     loadComponent: () =>
-      import('./modules/deliveries/delivery-form.component').then(m => m.DeliveryFormComponent)
+      import('./modules/deliveries/delivery-form.component').then(m => m.DeliveryFormComponent),
+    data: { renderMode: 'default' } 
   },
   {
     path: 'deliveries/edit/:id',
     loadComponent: () =>
-      import('./modules/deliveries/delivery-form.component').then(m => m.DeliveryFormComponent)
-  }
-
+      import('./modules/deliveries/delivery-form.component').then(m => m.DeliveryFormComponent),
+    data: { renderMode: 'default' }
+  },
+  { path: 'auth', component: LoginRegisterComponent }
 ];
