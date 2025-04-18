@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class DeliveryService {
-  baseUrl = environment.apiUrl + 'deliveries';
+  private baseUrl = environment.apiUrl + '/deliveries';
 
   constructor(private http: HttpClient) {}
 
@@ -16,15 +16,15 @@ export class DeliveryService {
   }
 
   getDeliveryById(id: number): Observable<any> {
-    return this.http.get(`/api/deliveries/${id}`);
+    return this.http.get(`${this.baseUrl}/${id}`);
   }
 
   addDelivery(delivery: any): Observable<any> {
-    return this.http.post(`/api/deliveries`, delivery);
+    return this.http.post(this.baseUrl, delivery);
   }
 
   updateDelivery(id: number, delivery: any): Observable<any> {
-    return this.http.put(`/api/deliveries/${id}`, delivery);
+    return this.http.put(`${this.baseUrl}/${id}`, delivery);
   }
 
   deleteDelivery(id: number): Observable<any> {

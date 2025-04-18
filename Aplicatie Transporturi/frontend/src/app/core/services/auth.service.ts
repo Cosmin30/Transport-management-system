@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, tap } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private baseUrl = 'https://localhost:5001/api/auth';
+  private baseUrl = environment.apiUrl + '/auth';
 
-  // ✅ Asigură-te că nu accesezi localStorage în afara browserului
   private userSubject = new BehaviorSubject<string | null>(
     typeof window !== 'undefined' ? localStorage.getItem('username') : null
   );
