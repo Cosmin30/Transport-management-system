@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class DriverService {
-  baseUrl = environment.apiUrl + 'drivers';
+  baseUrl = environment.apiUrl + '/drivers';
 
   constructor(private http: HttpClient) {}
 

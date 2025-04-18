@@ -6,7 +6,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class VehicleService {
-  baseUrl = environment.apiUrl + 'vehicles';
+  baseUrl = environment.apiUrl + '/vehicles';
 
   constructor(private http: HttpClient) { }
 
