@@ -7,20 +7,23 @@ namespace Aplicatie_Transporturi.Controllers
     using Aplicatie_Transporturi.Interfaces;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
+    using System.Data;
     using System.Security.Cryptography;
     using System.Text;
-
     [ApiController]
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
         private readonly DataContext _context;
         private readonly ITokenService _tokenService;
+        private readonly IDataSeeder _seeder;
 
-        public AuthController(DataContext context, ITokenService tokenService)
+        public AuthController(DataContext context, ITokenService tokenService, IDataSeeder seeder)
         {
             _context = context;
             _tokenService = tokenService;
+            _seeder = seeder;
+
         }
 
         [HttpPost("register")]
@@ -39,6 +42,8 @@ namespace Aplicatie_Transporturi.Controllers
 
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
+            await _seeder.SeedDataForUser(user.Id);
+
 
             return new UserDto
             {

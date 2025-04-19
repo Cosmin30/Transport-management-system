@@ -1,5 +1,7 @@
 ﻿using Aplicatie_Transporturi.Data;
 using Aplicatie_Transporturi.Extensions;
+using Aplicatie_Transporturi.Interfaces;
+using Aplicatie_Transporturi.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -35,6 +37,7 @@ builder.Services.AddIdentityServices(builder.Configuration);
 
 // Repositories, TokenService, AutoMapper
 builder.Services.AddApplicationServices();
+builder.Services.AddScoped<IDataSeeder, DataSeeder>();
 
 var app = builder.Build();
 
