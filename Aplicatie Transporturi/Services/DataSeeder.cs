@@ -23,6 +23,7 @@ namespace Aplicatie_Transporturi.Services
 
             if (existingVehicles.Count >= 10 && existingDrivers.Count >= 10 && existingDeliveries.Count >= 10)
                 return; // datele există deja
+            var rand = new Random(); 
 
             var vehicles = new List<Vehicle>();
             var drivers = new List<Driver>();
@@ -35,7 +36,9 @@ namespace Aplicatie_Transporturi.Services
                 {
                     UserId = userId,
                     LicensePlate = $"B-{i + 10}-ROM",
-                    Model = models[i]
+                    Model = models[i],
+                    Year = rand.Next(2005, 2024) // orice an între 2005 și 2023
+
                 };
                 vehicles.Add(vehicle);
                 _context.Vehicles.Add(vehicle);
