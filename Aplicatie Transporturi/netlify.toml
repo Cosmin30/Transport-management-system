@@ -1,13 +1,9 @@
-[[plugins]]
-  package = "netlify-plugin-prerender-spa"
-  [plugins.inputs]
-    staticDir = "Aplicatie Transporturi/frontend/dist/frontend/browser"
-    routes = [
-      "/", "/drivers", "/drivers/add",
-      "/vehicles", "/vehicles/add",
-      "/deliveries", "/deliveries/add",
-      "/drivers/edit/:id",
-      "/vehicles/edit/:id",
-      "/deliveries/edit/:id"
-    ]
-    getPrerenderParams = "prerender-params.js"
+[build]
+  base    = "Aplicatie Transporturi/frontend"
+  command = "npm run build"
+  publish = "Aplicatie Transporturi/frontend/dist/frontend/browser"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
