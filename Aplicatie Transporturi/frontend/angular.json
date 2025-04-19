@@ -35,7 +35,6 @@
             "scripts": [  "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
           ],
             "server": "src/main.server.ts",
-            "outputMode": "server",
             "ssr": {
               "entry": "src/server.ts"
             }
@@ -60,7 +59,9 @@
         "maximumError": "8kB"
       }
     ],
-    "outputHashing": "all"
+    "outputHashing": "all",
+    "prerender": false
+
   },
   "development": {
     "optimization": false,

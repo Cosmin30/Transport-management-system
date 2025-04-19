@@ -19,8 +19,7 @@ export const routes: Routes = [
   {
     path: 'deliveries/edit/:id',
     loadComponent: () =>
-      import('./modules/deliveries/delivery-form.component').then(m => m.DeliveryFormComponent),
-    data: { renderMode: 'no-prerender' }
+      import('./modules/deliveries/delivery-form.component').then(m => m.DeliveryFormComponent)
   },
 
   { path: 'auth', component: LoginRegisterComponent },
@@ -32,8 +31,7 @@ export const routes: Routes = [
   {
     path: 'drivers/edit/:id',
     loadComponent: () =>
-      import('./modules/drivers/driver-form.component').then(m => m.DriverFormComponent),
-    data: { renderMode: 'no-prerender' }
+      import('./modules/drivers/driver-form.component').then(m => m.DriverFormComponent)
   },
   {
     path: 'vehicles/add',
@@ -43,7 +41,8 @@ export const routes: Routes = [
   {
     path: 'vehicles/edit/:id',
     loadComponent: () =>
-      import('./modules/vehicles/vehicle-form.component').then(m => m.VehicleFormComponent),
-    data: { renderMode: 'no-prerender' }
+      import('./modules/vehicles/vehicle-form.component').then(m => m.VehicleFormComponent)
   }
+  
+  
 ];
