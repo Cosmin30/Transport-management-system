@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.Text.Json.Serialization;
+
 namespace Aplicatie_Transporturi.Entities
 {
     public class Delivery
@@ -7,7 +10,13 @@ namespace Aplicatie_Transporturi.Entities
         public string PickupLocation { get; set; } = string.Empty;
         public string DropoffLocation { get; set; } = string.Empty;
 
-        public DateTime ScheduledDate { get; set; }
+        private DateTime _scheduledDate;
+        public DateTime ScheduledDate
+        {
+            get => _scheduledDate;
+            set => _scheduledDate = DateTime.SpecifyKind(value, DateTimeKind.Utc);
+        }
+
         public string Status { get; set; } = "Planned";
 
         public int? VehicleId { get; set; }
@@ -15,5 +24,10 @@ namespace Aplicatie_Transporturi.Entities
 
         public int? DriverId { get; set; }
         public Driver? Driver { get; set; }
+        public int UserId { get; set; }
+        [ValidateNever]
+        [JsonIgnore]
+        public AppUser? User { get; set; }
     }
+
 }

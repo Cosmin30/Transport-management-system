@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.Text.Json.Serialization;
+
 namespace Aplicatie_Transporturi.Entities
 {
 
@@ -7,5 +10,9 @@ namespace Aplicatie_Transporturi.Entities
         public string Name { get; set; } = string.Empty;
         public string LicenseNumber { get; set; } = string.Empty;
         public bool IsAvailable { get; set; } = true;
+        public int UserId { get; set; }
+        [ValidateNever]
+        [JsonIgnore]
+        public AppUser? User { get; set; } 
     }
 }

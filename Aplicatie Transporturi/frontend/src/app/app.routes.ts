@@ -3,7 +3,6 @@ import { HomeComponent } from './modules/home/home/home.component';
 import { VehicleListComponent } from './modules/vehicles/vehicle-list/vehicle-list.component';
 import { DriverListComponent } from './modules/drivers/driver-list/driver-list.component';
 import { DeliveryListComponent } from './modules/deliveries/delivery-list/delivery-list.component';
-import { DeliveryFormComponent } from './modules/deliveries/delivery-form.component';
 import { LoginRegisterComponent } from './modules/auth/login-register/login-register.component';
 
 export const routes: Routes = [
@@ -11,13 +10,39 @@ export const routes: Routes = [
   { path: 'vehicles', component: VehicleListComponent },
   { path: 'drivers', component: DriverListComponent },
   { path: 'deliveries', component: DeliveryListComponent },
+
   {
     path: 'deliveries/add',
     loadComponent: () =>
-      import('./modules/deliveries/delivery-form.component').then(m => m.DeliveryFormComponent),
-    data: { renderMode: 'default' } 
+      import('./modules/deliveries/delivery-form.component').then(m => m.DeliveryFormComponent)
+  },
+  {
+    path: 'deliveries/edit/:id',
+    loadComponent: () =>
+      import('./modules/deliveries/delivery-form.component').then(m => m.DeliveryFormComponent)
   },
 
+  { path: 'auth', component: LoginRegisterComponent },
+  {
+    path: 'drivers/add',
+    loadComponent: () =>
+      import('./modules/drivers/driver-form.component').then(m => m.DriverFormComponent)
+  },
+  {
+    path: 'drivers/edit/:id',
+    loadComponent: () =>
+      import('./modules/drivers/driver-form.component').then(m => m.DriverFormComponent)
+  },
+  {
+    path: 'vehicles/add',
+    loadComponent: () =>
+      import('./modules/vehicles/vehicle-form.component').then(m => m.VehicleFormComponent)
+  },
+  {
+    path: 'vehicles/edit/:id',
+    loadComponent: () =>
+      import('./modules/vehicles/vehicle-form.component').then(m => m.VehicleFormComponent)
+  }
   
-  { path: 'auth', component: LoginRegisterComponent }
+  
 ];

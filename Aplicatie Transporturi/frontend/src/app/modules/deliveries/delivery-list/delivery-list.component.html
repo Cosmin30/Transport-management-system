@@ -1,7 +1,9 @@
 <h2 class="text-center mb-4 text-info">Lista Curselor</h2>
 
 <div class="text-end mb-3">
-  <a routerLink="/deliveries/add" class="btn btn-success">Adaugă Cursă</a>
+  <a [routerLink]="['/deliveries/add']" class="btn btn-success">
+    <i class="fa fa-plus me-1"></i> Adaugă Cursă
+  </a>
 </div>
 
 <div *ngIf="loading" class="text-center">
@@ -18,8 +20,11 @@
   <div class="col-md-6 mb-4" *ngFor="let d of deliveries">
     <div class="card shadow-sm h-100 border-info">
       <div class="card-body">
-        <h5 class="card-title"><i class="bi bi-truck me-2"></i>{{ d.pickupLocation }} → {{ d.dropoffLocation }}</h5>
+        <h5 class="card-title">
+          <i class="fa fa-truck me-2"></i>{{ d.pickupLocation }} → {{ d.dropoffLocation }}
+        </h5>
         <p class="card-text">
+          <strong>ID:</strong> {{ d.id }}<br>
           <strong>Data:</strong> {{ d.scheduledDate | date:'dd/MM/yyyy HH:mm' }}<br>
           <strong>Status:</strong>
           <span [ngClass]="{
@@ -32,8 +37,12 @@
         </p>
 
         <div class="d-flex justify-content-end gap-2">
-          <button class="btn btn-outline-primary btn-sm" (click)="editDelivery(d.id)">✏️ Editează</button>
-          <button class="btn btn-outline-danger btn-sm" (click)="deleteDelivery(d.id)">🗑️ Șterge</button>
+          <button class="btn btn-outline-primary btn-sm" (click)="editDelivery(d.id)">
+            <i class="fa fa-edit me-1"></i> Editează
+          </button>
+          <button class="btn btn-outline-danger btn-sm" (click)="deleteDelivery(d.id)">
+            <i class="fa fa-trash me-1"></i> Șterge
+          </button>
         </div>
       </div>
     </div>

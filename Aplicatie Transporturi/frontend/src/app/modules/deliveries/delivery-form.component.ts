@@ -54,21 +54,33 @@ export class DeliveryFormComponent implements OnInit {
   
 
   onSubmit(): void {
+    console.log('>>> Submit apăsat');
+  
     if (this.form.invalid) {
-      console.warn('Form invalid:', this.form.value);
+      console.warn('Formular invalid:', this.form.value);
       return;
     }
-
-    const delivery = this.form.value;
-
+  
+    const delivery = { ...this.form.value };
+  
+    // ✅ dacă e editare, adaugă ID-ul în obiect
     if (this.isEditMode && this.deliveryId !== null) {
+      delivery.id = this.deliveryId;
+  
+      console.log('>>> Trimitem la update:', delivery);
+  
       this.deliveryService.updateDelivery(this.deliveryId, delivery).subscribe(() => {
         this.router.navigate(['/deliveries']);
       });
     } else {
+      console.log('>>> Trimitem la adăugare:', delivery);
+  
       this.deliveryService.addDelivery(delivery).subscribe(() => {
         this.router.navigate(['/deliveries']);
       });
     }
   }
+  
+  
+  
 }

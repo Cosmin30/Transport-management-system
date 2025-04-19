@@ -4,5 +4,8 @@ namespace Aplicatie_Transporturi.DTOs
     {
         public string Name { get; set; }
         public string LicenseNumber { get; set; }
+        public bool IsAvailable { get; set; }
     }
+
+
 }

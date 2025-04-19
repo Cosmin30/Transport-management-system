@@ -2,6 +2,7 @@ namespace Aplicatie_Transporturi.Controllers
 {
     using Aplicatie_Transporturi.Data;
     using Aplicatie_Transporturi.DTOs;
+    using Aplicatie_Transporturi.DTOs.Aplicatie_Transporturi.DTOs;
     using Aplicatie_Transporturi.Entities;
     using Aplicatie_Transporturi.Interfaces;
     using Microsoft.AspNetCore.Mvc;
@@ -63,9 +64,11 @@ namespace Aplicatie_Transporturi.Controllers
 
             return new UserDto
             {
+                Id = user.Id, // ? Adaug? asta
                 Username = user.Username,
                 Token = _tokenService.CreateToken(user)
             };
+
         }
 
         private async Task<bool> UserExists(string username)

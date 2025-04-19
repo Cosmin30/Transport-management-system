@@ -1,5 +1,11 @@
 <h2 class="text-center mb-4 text-primary">Lista Șoferi</h2>
 
+<div class="text-end mb-3">
+  <a class="btn btn-success" [routerLink]="['/drivers/add']">
+    <i class="fas fa-plus me-1"></i> Adaugă Șofer
+  </a>
+</div>
+
 <div *ngIf="loading" class="text-center">
   <div class="spinner-border text-primary" role="status">
     <span class="visually-hidden">Se încarcă...</span>
@@ -18,12 +24,22 @@
           <i class="bi bi-person-fill me-2"></i>{{ d.name }}
         </h5>
         <p class="card-text">
+          <strong>ID:</strong> {{ d.id }}<br>
           <strong>Nr. permis:</strong> {{ d.licenseNumber }}<br>
           <strong>Disponibil:</strong>
           <span [class.text-success]="d.isAvailable" [class.text-danger]="!d.isAvailable">
             {{ d.isAvailable ? 'Da' : 'Nu' }}
           </span>
         </p>
+
+        <div class="d-flex justify-content-end gap-2">
+          <button class="btn btn-outline-primary btn-sm" (click)="editDriver(d.id)">
+            <i class="fas fa-edit"></i> Editează
+          </button>
+          <button class="btn btn-outline-danger btn-sm" (click)="deleteDriver(d.id)">
+            <i class="fas fa-trash-alt"></i> Șterge
+          </button>
+        </div>
       </div>
     </div>
   </div>

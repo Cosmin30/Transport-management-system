@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Aplicatie_Transporturi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20250418125311_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250418215050_AddUserRelationsToEntities")]
+    partial class AddUserRelationsToEntities
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -76,12 +76,17 @@ namespace Aplicatie_Transporturi.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
                     b.Property<int?>("VehicleId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
                     b.HasIndex("DriverId");
+
+                    b.HasIndex("UserId");
 
                     b.HasIndex("VehicleId");
 
@@ -107,7 +112,12 @@ namespace Aplicatie_Transporturi.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Drivers");
                 });
@@ -131,10 +141,15 @@ namespace Aplicatie_Transporturi.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
                     b.Property<int>("Year")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Vehicles");
                 });
@@ -143,15 +158,56 @@ namespace Aplicatie_Transporturi.Migrations
                 {
                     b.HasOne("Aplicatie_Transporturi.Entities.Driver", "Driver")
                         .WithMany()
-                        .HasForeignKey("DriverId");
+                        .HasForeignKey("DriverId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.HasOne("Aplicatie_Transporturi.Entities.AppUser", "User")
+                        .WithMany("Deliveries")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Aplicatie_Transporturi.Entities.Vehicle", "Vehicle")
                         .WithMany()
-                        .HasForeignKey("VehicleId");
+                        .HasForeignKey("VehicleId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("Driver");
 
+                    b.Navigation("User");
+
                     b.Navigation("Vehicle");
+                });
+
+            modelBuilder.Entity("Aplicatie_Transporturi.Entities.Driver", b =>
+                {
+                    b.HasOne("Aplicatie_Transporturi.Entities.AppUser", "User")
+                        .WithMany("Drivers")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Aplicatie_Transporturi.Entities.Vehicle", b =>
+                {
+                    b.HasOne("Aplicatie_Transporturi.Entities.AppUser", "User")
+                        .WithMany("Vehicles")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Aplicatie_Transporturi.Entities.AppUser", b =>
+                {
+                    b.Navigation("Deliveries");
+
+                    b.Navigation("Drivers");
+
+                    b.Navigation("Vehicles");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,20 +1,55 @@
-import { Component, OnInit } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { VehicleListComponent } from './vehicle-list.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { VehicleService } from 'src/app/core/services/vehicle.service';
+import { of, throwError } from 'rxjs';
 
-@Component({
-  selector: 'app-vehicle-list',
-  templateUrl: './vehicle-list.component.html',
-  styleUrls: ['./vehicle-list.component.css']
-})
-export class VehicleListComponent implements OnInit {
-  vehicles: any[] = [];
+describe('VehicleListComponent', () => {
+  let component: VehicleListComponent;
+  let fixture: ComponentFixture<VehicleListComponent>;
+  let mockVehicleService: jasmine.SpyObj<VehicleService>;
 
-  constructor(private vehicleService: VehicleService) {}
+  beforeEach(async () => {
+    mockVehicleService = jasmine.createSpyObj('VehicleService', ['getVehicles']);
 
-  ngOnInit(): void {
-    this.vehicleService.getVehicles().subscribe({
-      next: (data) => this.vehicles = data as any[],
-      error: (err) => console.error('Eroare:', err)
-    });
-  }
-}
+    await TestBed.configureTestingModule({
+      declarations: [VehicleListComponent],
+      imports: [HttpClientTestingModule],
+      providers: [
+        { provide: VehicleService, useValue: mockVehicleService }
+      ]
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(VehicleListComponent);
+    component = fixture.componentInstance;
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should load vehicles on init', () => {
+    const mockVehicles = [
+      { id: 1, licensePlate: 'B123ABC', model: 'VW Golf', year: 2020, isAvailable: true },
+      { id: 2, licensePlate: 'CJ456XYZ', model: 'Dacia Duster', year: 2022, isAvailable: false }
+    ];
+
+    mockVehicleService.getVehicles.and.returnValue(of(mockVehicles));
+
+    fixture.detectChanges(); // triggers ngOnInit
+
+    expect(component.vehicles.length).toBe(2);
+    expect(component.vehicles[0].licensePlate).toBe('B123ABC');
+    expect(mockVehicleService.getVehicles).toHaveBeenCalled();
+  });
+
+  it('should handle error on vehicle load', () => {
+    spyOn(console, 'error');
+    mockVehicleService.getVehicles.and.returnValue(throwError(() => new Error('Eroare test')));
+
+    fixture.detectChanges();
+
+    expect(console.error).toHaveBeenCalled();
+    expect(component.vehicles.length).toBe(0);
+  });
+});

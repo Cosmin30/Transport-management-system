@@ -4,7 +4,7 @@ namespace Aplicatie_Transporturi.Interfaces
 {
     public interface IDeliveryRepository
     {
-        Task<IEnumerable<Delivery>> GetDeliveriesAsync();
+        Task<IEnumerable<Delivery>> GetDeliveriesByUserIdAsync(int userId);
         Task<Delivery?> GetDeliveryByIdAsync(int id);
         Task AddDeliveryAsync(Delivery delivery);
         Task UpdateDeliveryAsync(Delivery delivery);

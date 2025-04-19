@@ -1,5 +1,11 @@
 <h2 class="text-center mb-4 text-success">Lista Vehicule</h2>
 
+<div class="text-end mb-3">
+  <a class="btn btn-success" [routerLink]="['/vehicles/add']">
+    <i class="fas fa-plus me-1"></i> Adaugă Vehicul
+  </a>
+</div>
+
 <div class="row" *ngIf="vehicles.length > 0; else noData">
   <div class="col-md-4 mb-4" *ngFor="let v of vehicles">
     <div class="card shadow-sm h-100 border-success">
@@ -8,6 +14,7 @@
           <i class="bi bi-truck-front-fill me-2"></i>{{ v.licensePlate }}
         </h5>
         <p class="card-text">
+          <strong>ID:</strong> {{ v.id }}<br>
           <strong>Model:</strong> {{ v.model }}<br>
           <strong>An fabricație:</strong> {{ v.year }}<br>
           <strong>Disponibil:</strong>
@@ -15,6 +22,16 @@
             {{ v.isAvailable ? 'Da' : 'Nu' }}
           </span>
         </p>
+        
+
+        <div class="d-flex justify-content-end gap-2">
+          <button class="btn btn-outline-primary btn-sm" (click)="editVehicle(v.id)">
+            <i class="fas fa-edit"></i> Editează
+          </button>
+          <button class="btn btn-outline-danger btn-sm" (click)="deleteVehicle(v.id)">
+            <i class="fas fa-trash-alt"></i> Șterge
+          </button>
+        </div>
       </div>
     </div>
   </div>

@@ -2,6 +2,12 @@
   <h3 class="text-center">{{ isEditMode ? 'Editează Cursa' : 'Adaugă Cursă' }}</h3>
 
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <!-- Afișăm ID-ul cursei în modul de editare -->
+    <div *ngIf="isEditMode && deliveryId" class="mb-3">
+      <label for="id" class="form-label">ID Cursă</label>
+      <input id="id" type="text" class="form-control" [value]="deliveryId" disabled />
+    </div>
+
     <div class="mb-3">
       <label for="pickupLocation" class="form-label">Punct plecare</label>
       <input id="pickupLocation" type="text" class="form-control" formControlName="pickupLocation" />
