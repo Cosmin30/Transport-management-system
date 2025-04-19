@@ -19,7 +19,8 @@ export const routes: Routes = [
   {
     path: 'deliveries/edit/:id',
     loadComponent: () =>
-      import('./modules/deliveries/delivery-form.component').then(m => m.DeliveryFormComponent)
+      import('./modules/deliveries/delivery-form.component').then(m => m.DeliveryFormComponent),
+    data: { renderMode: 'no-prerender' }
   },
 
   { path: 'auth', component: LoginRegisterComponent },
@@ -31,7 +32,8 @@ export const routes: Routes = [
   {
     path: 'drivers/edit/:id',
     loadComponent: () =>
-      import('./modules/drivers/driver-form.component').then(m => m.DriverFormComponent)
+      import('./modules/drivers/driver-form.component').then(m => m.DriverFormComponent),
+    data: { renderMode: 'no-prerender' }
   },
   {
     path: 'vehicles/add',
@@ -41,8 +43,7 @@ export const routes: Routes = [
   {
     path: 'vehicles/edit/:id',
     loadComponent: () =>
-      import('./modules/vehicles/vehicle-form.component').then(m => m.VehicleFormComponent)
+      import('./modules/vehicles/vehicle-form.component').then(m => m.VehicleFormComponent),
+    data: { renderMode: 'no-prerender' }
   }
-  
-  
 ];
