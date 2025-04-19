@@ -25,4 +25,8 @@ html, body {
   app-footer {
     margin-top: auto;
   }
-  
+  .footer-copy {
+  color: white !important;
+  text-align: center;
+  font-size: 0.9rem;
+}

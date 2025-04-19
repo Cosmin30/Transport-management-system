@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router'; // ✅ NECESAR pentru routerLink
 
 @Component({
   selector: 'app-footer',
-  imports: [],
+  standalone: true,
+  imports: [RouterModule], // ✅ Aici adăugăm RouterModule
   templateUrl: './footer.component.html',
-  styleUrl: './footer.component.css'
+  styleUrls: ['./footer.component.css']
 })
-export class FooterComponent {
-
-}
+export class FooterComponent {}
