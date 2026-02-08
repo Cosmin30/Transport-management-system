@@ -57,5 +57,25 @@ namespace Aplicatie_Transporturi.Repositories
             delivery.Status = newStatus;
             await _context.SaveChangesAsync();
         }
+
+        public async Task<Vehicle?> GetVehicleByIdAsync(int id)
+        {
+            return await _context.Vehicles.FindAsync(id);
+        }
+
+        public async Task<Driver?> GetDriverByIdAsync(int id)
+        {
+            return await _context.Drivers.FindAsync(id);
+        }
+
+        public async Task<IEnumerable<Driver>> GetDriversByUserIdAsync(int userId)
+        {
+            return await _context.Drivers.Where(d => d.UserId == userId).ToListAsync();
+        }
+
+        public async Task<IEnumerable<Vehicle>> GetVehiclesByUserIdAsync(int userId)
+        {
+            return await _context.Vehicles.Where(v => v.UserId == userId).ToListAsync();
+        }
     }
 }

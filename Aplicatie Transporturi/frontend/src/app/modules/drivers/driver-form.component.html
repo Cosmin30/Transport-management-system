@@ -3,7 +3,6 @@
 </h2>
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()" class="mx-auto" style="max-width: 600px;">
-  <!-- afișează ID-ul în modul edit -->
   <div *ngIf="isEditMode && driverId" class="mb-3 text-muted">
     <strong>ID Șofer:</strong> {{ driverId }}
   </div>

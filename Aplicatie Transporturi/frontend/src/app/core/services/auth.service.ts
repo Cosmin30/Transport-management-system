@@ -14,7 +14,6 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  // ✅ LOGIN
   login(data: { username: string; password: string }): Observable<any> {
     return this.http.post(`${this.baseUrl}/login`, data).pipe(
       tap((res: any) => {

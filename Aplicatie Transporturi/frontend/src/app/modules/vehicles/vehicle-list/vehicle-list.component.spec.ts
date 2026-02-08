@@ -36,7 +36,7 @@ describe('VehicleListComponent', () => {
 
     mockVehicleService.getVehicles.and.returnValue(of(mockVehicles));
 
-    fixture.detectChanges(); // triggers ngOnInit
+    fixture.detectChanges();
 
     expect(component.vehicles.length).toBe(2);
     expect(component.vehicles[0].licensePlate).toBe('B123ABC');

@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { DeliveryService } from 'src/app/core/services/delivery.service';
 
 @Component({
   selector: 'app-delivery-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './delivery-form.component.html',
   styleUrls: ['./delivery-form.component.css']
 })
@@ -30,18 +30,22 @@ export class DeliveryFormComponent implements OnInit {
       scheduledDate: ['', Validators.required],
       status: ['Planned', Validators.required],
       driverId: [null],
-      vehicleId: [null]
+      vehicleId: [null],
+      estimatedCost: [0, [Validators.required, Validators.min(0)]],
+      revenue: [0, [Validators.required, Validators.min(0)]],
+      distanceKm: [0, [Validators.required, Validators.min(1)]],
+      notes: ['']
     });
   
     const id = this.route.snapshot.paramMap.get('id');
-    console.log('ID din URL:', id); // 👈 vezi dacă ajunge
+    console.log('ID din URL:', id); 
   
     if (id) {
       this.isEditMode = true;
       this.deliveryId = +id;
   
       this.deliveryService.getDeliveryById(this.deliveryId).subscribe(data => {
-        console.log('Date primite pentru edit:', data); // 👈 vezi dacă primești date
+        console.log('Date primite pentru edit:', data); 
   
         const formattedDate = new Date(data.scheduledDate).toISOString().slice(0, 16);
         this.form.patchValue({
@@ -63,7 +67,6 @@ export class DeliveryFormComponent implements OnInit {
   
     const delivery = { ...this.form.value };
   
-    // ✅ dacă e editare, adaugă ID-ul în obiect
     if (this.isEditMode && this.deliveryId !== null) {
       delivery.id = this.deliveryId;
   

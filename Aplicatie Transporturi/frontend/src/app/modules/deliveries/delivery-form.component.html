@@ -2,48 +2,145 @@
   <h3 class="text-center">{{ isEditMode ? 'Editează Cursa' : 'Adaugă Cursă' }}</h3>
 
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <!-- Afișăm ID-ul cursei în modul de editare -->
     <div *ngIf="isEditMode && deliveryId" class="mb-3">
       <label for="id" class="form-label">ID Cursă</label>
       <input id="id" type="text" class="form-control" [value]="deliveryId" disabled />
     </div>
 
-    <div class="mb-3">
-      <label for="pickupLocation" class="form-label">Punct plecare</label>
-      <input id="pickupLocation" type="text" class="form-control" formControlName="pickupLocation" />
+    <div class="card mb-4">
+      <div class="card-header bg-primary text-white">
+        <h5 class="mb-0"> Informații Livrare</h5>
+      </div>
+      <div class="card-body">
+        <div class="mb-3">
+          <label for="pickupLocation" class="form-label">Punct plecare *</label>
+          <input id="pickupLocation" type="text" class="form-control" 
+                 formControlName="pickupLocation" 
+                 placeholder="Ex: București, Str. Libertății 10" />
+          <div class="text-danger" *ngIf="form.get('pickupLocation')?.invalid && form.get('pickupLocation')?.touched">
+            Punct de plecare obligatoriu
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="dropoffLocation" class="form-label">Destinație *</label>
+          <input id="dropoffLocation" type="text" class="form-control" 
+                 formControlName="dropoffLocation" 
+                 placeholder="Ex: Cluj, Str. Unirii 25" />
+          <div class="text-danger" *ngIf="form.get('dropoffLocation')?.invalid && form.get('dropoffLocation')?.touched">
+            Destinația este obligatorie
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="scheduledDate" class="form-label">Data programată *</label>
+          <input id="scheduledDate" type="datetime-local" class="form-control" 
+                 formControlName="scheduledDate" />
+        </div>
+
+        <div class="mb-3">
+          <label for="distanceKm" class="form-label">Distanță (km) *</label>
+          <input id="distanceKm" type="number" class="form-control" 
+                 formControlName="distanceKm" 
+                 placeholder="Ex: 450" 
+                 min="1" />
+          <div class="text-danger" *ngIf="form.get('distanceKm')?.invalid && form.get('distanceKm')?.touched">
+            Distanța trebuie să fie mai mare de 0 km
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="notes" class="form-label">Observații</label>
+          <textarea id="notes" class="form-control" 
+                    formControlName="notes" 
+                    rows="3" 
+                    placeholder="Detalii suplimentare despre livrare..."></textarea>
+        </div>
+      </div>
     </div>
 
-    <div class="mb-3">
-      <label for="dropoffLocation" class="form-label">Destinație</label>
-      <input id="dropoffLocation" type="text" class="form-control" formControlName="dropoffLocation" />
+    <div class="card mb-4">
+      <div class="card-header bg-success text-white">
+        <h5 class="mb-0">Date Financiare</h5>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="estimatedCost" class="form-label">Cost Estimat (RON) *</label>
+            <input id="estimatedCost" type="number" class="form-control" 
+                   formControlName="estimatedCost" 
+                   placeholder="Ex: 500" 
+                   min="0" 
+                   step="0.01" />
+            <small class="text-muted">Costul estimat al transportului</small>
+            <div class="text-danger" *ngIf="form.get('estimatedCost')?.invalid && form.get('estimatedCost')?.touched">
+              Cost estimat invalid
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="revenue" class="form-label">Venit (RON) *</label>
+            <input id="revenue" type="number" class="form-control" 
+                   formControlName="revenue" 
+                   placeholder="Ex: 800" 
+                   min="0" 
+                   step="0.01" />
+            <small class="text-muted">Prețul oferit clientului</small>
+            <div class="text-danger" *ngIf="form.get('revenue')?.invalid && form.get('revenue')?.touched">
+              Venitul trebuie să fie pozitiv
+            </div>
+          </div>
+        </div>
+
+        <div class="alert alert-info" *ngIf="form.get('revenue')?.value > 0 && form.get('estimatedCost')?.value > 0">
+          <strong>Profit Estimat:</strong> 
+          {{ (form.get('revenue')?.value - form.get('estimatedCost')?.value) | number:'1.2-2' }} RON
+        </div>
+      </div>
     </div>
 
-    <div class="mb-3">
-      <label for="scheduledDate" class="form-label">Data programată</label>
-      <input id="scheduledDate" type="datetime-local" class="form-control" formControlName="scheduledDate" />
+    <div class="card mb-4">
+      <div class="card-header bg-info text-white">
+        <h5 class="mb-0"> Asignare Resurse</h5>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <label for="status" class="form-label">Status</label>
+            <select id="status" class="form-select" formControlName="status">
+              <option value="Planned">Planificată</option>
+              <option value="In Progress">În Progres</option>
+              <option value="Completed">Completată</option>
+            </select>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label for="vehicleId" class="form-label">Vehicul (ID)</label>
+            <input id="vehicleId" type="number" class="form-control" 
+                   formControlName="vehicleId" 
+                   placeholder="ID vehicul" />
+            <small class="text-muted">Opțional</small>
+          </div>
+
+          <div class="col-md-4 mb-3">
+            <label for="driverId" class="form-label">Șofer (ID)</label>
+            <input id="driverId" type="number" class="form-control" 
+                   formControlName="driverId" 
+                   placeholder="ID șofer" />
+            <small class="text-muted">Opțional</small>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="mb-3">
-      <label for="status" class="form-label">Status</label>
-      <select id="status" class="form-select" formControlName="status">
-        <option value="Planned">Planned</option>
-        <option value="InProgress">InProgress</option>
-        <option value="Completed">Completed</option>
-      </select>
+    <div class="d-flex justify-content-between">
+      <button type="button" class="btn btn-secondary" routerLink="/deliveries">
+        <i class="bi bi-arrow-left me-1"></i> Înapoi
+      </button>
+      <button class="btn btn-success btn-lg" type="submit" [disabled]="form.invalid">
+        <i class="bi bi-check-circle me-1"></i>
+        {{ isEditMode ? 'Salvează modificările' : 'Adaugă cursă' }}
+      </button>
     </div>
-
-    <div class="mb-3">
-      <label for="driverId" class="form-label">Șofer (ID)</label>
-      <input id="driverId" type="number" class="form-control" formControlName="driverId" />
-    </div>
-
-    <div class="mb-3">
-      <label for="vehicleId" class="form-label">Vehicul (ID)</label>
-      <input id="vehicleId" type="number" class="form-control" formControlName="vehicleId" />
-    </div>
-
-    <button class="btn btn-success" type="submit" [disabled]="form.invalid">
-      {{ isEditMode ? 'Salvează modificările' : 'Adaugă cursă' }}
-    </button>
   </form>
 </div>

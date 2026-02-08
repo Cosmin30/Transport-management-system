@@ -19,6 +19,18 @@ namespace Aplicatie_Transporturi.Entities
 
         public string Status { get; set; } = "Planned";
 
+        public double? CurrentLatitude { get; set; }
+        public double? CurrentLongitude { get; set; }
+        public DateTime? LastLocationUpdate { get; set; }
+
+        public decimal EstimatedCost { get; set; }
+        public decimal ActualCost { get; set; }
+        public decimal FuelCost { get; set; }
+        public decimal Revenue { get; set; }
+        
+        public string? Notes { get; set; }
+        public int DistanceKm { get; set; }
+
         public int? VehicleId { get; set; }
         public Vehicle? Vehicle { get; set; }
 
@@ -28,6 +40,8 @@ namespace Aplicatie_Transporturi.Entities
         [ValidateNever]
         [JsonIgnore]
         public AppUser? User { get; set; }
+
+        public decimal Profit => Revenue - ActualCost;
     }
 
 }

@@ -1,0 +1,51 @@
+<div class="tracking-container">
+  <h2>Urmărire Livrare #{{ deliveryId }}</h2>
+
+  <div *ngIf="loading" class="loading">
+    <p>Se încarcă locația...</p>
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!loading && !error && currentLocation" class="tracking-content">
+    <div class="location-card">
+      <div class="card-header">
+        <h3>Locație Curentă</h3>
+        <button (click)="refreshLocation()" class="refresh-btn" title="Actualizează">
+          
+        </button>
+      </div>
+
+      <div class="location-details">
+        <div class="detail-item">
+          <span class="detail-label">Latitudine:</span>
+          <span class="detail-value">{{ currentLocation.latitude | number:'1.6-6' }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Longitudine:</span>
+          <span class="detail-value">{{ currentLocation.longitude | number:'1.6-6' }}</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label">Ultima actualizare:</span>
+          <span class="detail-value">{{ currentLocation.lastUpdate | date:'dd/MM/yyyy HH:mm:ss' }}</span>
+        </div>
+      </div>
+
+      <div class="action-buttons">
+        <button (click)="openInMaps()" class="btn-maps">
+           Deschide în Google Maps
+        </button>
+      </div>
+    </div>
+
+    <div class="info-message">
+      <p> Locația se actualizează automat la fiecare 30 de secunde</p>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && !error && !currentLocation" class="no-location">
+    <p> Nu există informații despre locație pentru această livrare</p>
+  </div>
+</div>

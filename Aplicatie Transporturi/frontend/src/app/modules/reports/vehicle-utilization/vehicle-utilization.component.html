@@ -1,0 +1,56 @@
+<div class="vehicle-utilization-container">
+  <h2>Utilizare Vehicule</h2>
+
+  <div *ngIf="loading" class="loading">
+    <p>Se încarcă datele...</p>
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!loading && !error" class="vehicles-grid">
+    <div *ngFor="let vehicle of vehicles" class="vehicle-card">
+      <div class="vehicle-header">
+        <div class="vehicle-icon">🚚</div>
+        <div class="vehicle-info">
+          <h3>{{ vehicle.licensePlate }}</h3>
+          <p class="vehicle-model">{{ vehicle.model }}</p>
+        </div>
+        <span [class]="getStatusClass(vehicle.isAvailable)" class="status-badge">
+          {{ getStatusText(vehicle.isAvailable) }}
+        </span>
+      </div>
+
+      <div class="vehicle-stats">
+        <div class="stat-item">
+          <span class="stat-icon">📦</span>
+          <div class="stat-details">
+            <span class="stat-value">{{ vehicle.totalDeliveriesAssigned }}</span>
+            <span class="stat-label">Livrări asignate</span>
+          </div>
+        </div>
+
+        <div class="stat-item">
+          <span class="stat-icon">🛣️</span>
+          <div class="stat-details">
+            <span class="stat-value">{{ vehicle.totalKmDriven | number:'1.0-0' }} km</span>
+            <span class="stat-label">Total km parcurși</span>
+          </div>
+        </div>
+
+        <div class="stat-item">
+          <span class="stat-icon">🔧</span>
+          <div class="stat-details">
+            <span class="stat-value">{{ vehicle.totalMaintenanceCost | number:'1.2-2' }} RON</span>
+            <span class="stat-label">Costuri întreținere</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="vehicles.length === 0" class="no-data-message">
+      <p>Nu există date despre utilizarea vehiculelor.</p>
+    </div>
+  </div>
+</div>

@@ -17,7 +17,6 @@ export class NavbarComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    // 🔄 Ascultă modificările de autentificare
     this.authService.user$.subscribe(user => {
       this.username = user;
     });

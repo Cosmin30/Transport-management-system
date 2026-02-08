@@ -26,7 +26,7 @@ export class LoginRegisterComponent {
     this.authService.login(this.loginData).subscribe({
       next: () => {
         alert('Autentificat cu succes!');
-        this.router.navigate(['/']); // ✅ Redirect către pagina principală
+        this.router.navigate(['/']); 
       },
       error: (err) => alert('Eroare la login: ' + (err.error || 'Serverul nu răspunde'))
     });

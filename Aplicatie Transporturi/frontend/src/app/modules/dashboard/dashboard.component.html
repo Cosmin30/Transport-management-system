@@ -1,0 +1,91 @@
+<div class="dashboard-container">
+  <h2>Dashboard</h2>
+
+  <div *ngIf="loading" class="loading">
+    <p>Loading dashboard data...</p>
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!loading && !error" class="dashboard-content">
+    <div class="stats-section">
+      <h3>Livrări</h3>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value">{{ deliveryReport?.totalDeliveries || 0 }}</div>
+          <div class="stat-label">Total Livrări</div>
+        </div>
+        <div class="stat-card completed">
+          <div class="stat-value">{{ deliveryReport?.completedDeliveries || 0 }}</div>
+          <div class="stat-label">Completate</div>
+        </div>
+        <div class="stat-card in-progress">
+          <div class="stat-value">{{ deliveryReport?.inProgressDeliveries || 0 }}</div>
+          <div class="stat-label">În Progres</div>
+        </div>
+        <div class="stat-card planned">
+          <div class="stat-value">{{ deliveryReport?.plannedDeliveries || 0 }}</div>
+          <div class="stat-label">Planificate</div>
+        </div>
+      </div>
+
+      <div class="completion-rate">
+        <p>Rata de completare: <strong>{{ completionRate | number:'1.1-1' }}%</strong></p>
+        <div class="progress-bar">
+          <div class="progress-fill" [style.width.%]="completionRate"></div>
+        </div>
+      </div>
+
+      <div class="distance-stat">
+        <p>Total km parcurși: <strong>{{ deliveryReport?.totalKmDriven || 0 }} km</strong></p>
+      </div>
+    </div>
+
+    <div class="financial-section">
+      <h3>Situație Financiară</h3>
+      <div class="financial-grid">
+        <div class="financial-card revenue">
+          <div class="financial-value">{{ financialOverview?.totalRevenue || 0 | number:'1.2-2' }} RON</div>
+          <div class="financial-label">Venituri Totale</div>
+        </div>
+        <div class="financial-card costs">
+          <div class="financial-value">{{ financialOverview?.totalCosts || 0 | number:'1.2-2' }} RON</div>
+          <div class="financial-label">Costuri Totale</div>
+        </div>
+        <div class="financial-card profit">
+          <div class="financial-value">{{ financialOverview?.totalProfit || 0 | number:'1.2-2' }} RON</div>
+          <div class="financial-label">Profit Total</div>
+        </div>
+        <div class="financial-card margin">
+          <div class="financial-value">{{ financialOverview?.profitMargin || 0 | number:'1.1-1' }}%</div>
+          <div class="financial-label">Marjă Profit</div>
+        </div>
+      </div>
+
+      <div class="averages-section">
+        <div class="average-item">
+          <span class="average-label">Media venit/livrare:</span>
+          <span class="average-value">{{ financialOverview?.averageRevenuePerDelivery || 0 | number:'1.2-2' }} RON</span>
+        </div>
+        <div class="average-item">
+          <span class="average-label">Cost mediu/km:</span>
+          <span class="average-value">{{ financialOverview?.averageCostPerKm || 0 | number:'1.2-2' }} RON</span>
+        </div>
+        <div class="average-item">
+          <span class="average-label">Costuri combustibil:</span>
+          <span class="average-value">{{ financialOverview?.totalFuelCosts || 0 | number:'1.2-2' }} RON</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="quick-stats">
+      <h3>Statistici Rapide</h3>
+      <div class="quick-stat-item">
+        <span>Profit mediu/livrare:</span>
+        <strong>{{ deliveryReport?.averageDeliveryProfit || 0 | number:'1.2-2' }} RON</strong>
+      </div>
+    </div>
+  </div>
+</div>

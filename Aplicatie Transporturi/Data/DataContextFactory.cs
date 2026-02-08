@@ -15,7 +15,7 @@ namespace Aplicatie_Transporturi.Data
                 .Build();
 
             var optionsBuilder = new DbContextOptionsBuilder<DataContext>();
-            optionsBuilder.UseNpgsql(config.GetConnectionString("DefaultConnection"));
+            optionsBuilder.UseSqlServer(config.GetConnectionString("DefaultConnection"));
 
             return new DataContext(optionsBuilder.Options);
         }

@@ -16,6 +16,34 @@ namespace Aplicatie_Transporturi.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<Delivery>()
+                .Property(d => d.EstimatedCost)
+                .HasPrecision(18, 2);
+            
+            modelBuilder.Entity<Delivery>()
+                .Property(d => d.ActualCost)
+                .HasPrecision(18, 2);
+            
+            modelBuilder.Entity<Delivery>()
+                .Property(d => d.FuelCost)
+                .HasPrecision(18, 2);
+            
+            modelBuilder.Entity<Delivery>()
+                .Property(d => d.Revenue)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<Vehicle>()
+                .Property(v => v.TotalMaintenanceCost)
+                .HasPrecision(18, 2);
+            
+            modelBuilder.Entity<Vehicle>()
+                .Property(v => v.FuelConsumptionPer100Km)
+                .HasPrecision(5, 2);
+
+            modelBuilder.Entity<Driver>()
+                .Property(d => d.TotalKmDriven)
+                .HasPrecision(18, 2);
+
+            modelBuilder.Entity<Delivery>()
                 .HasOne(d => d.Driver)
                 .WithMany()
                 .HasForeignKey(d => d.DriverId)
@@ -36,13 +64,13 @@ namespace Aplicatie_Transporturi.Data
                 .HasOne(d => d.User)
                 .WithMany(u => u.Drivers)
                 .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Vehicle>()
                 .HasOne(v => v.User)
                 .WithMany(u => u.Vehicles)
                 .HasForeignKey(v => v.UserId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.NoAction);
         }
 
 

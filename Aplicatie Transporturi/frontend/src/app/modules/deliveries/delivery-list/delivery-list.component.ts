@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Router, RouterModule } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { DeliveryService } from 'src/app/core/services/delivery.service';
 
 @Component({
   selector: 'app-delivery-list',
@@ -18,7 +19,11 @@ export class DeliveryListComponent implements OnInit {
   error: string | null = null;
 
   private apiUrl = environment.apiUrl + '/deliveries';
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    private http: HttpClient, 
+    private router: Router,
+    private deliveryService: DeliveryService
+  ) {}
 
   ngOnInit(): void {
     this.fetchDeliveries();
@@ -57,5 +62,52 @@ export class DeliveryListComponent implements OnInit {
         this.error = 'Nu s-a putut șterge cursa.';
       }
     });
+  }
+
+  trackDelivery(id: number): void {
+    this.router.navigate(['/deliveries/track', id]);
+  }
+
+  updateStatus(id: number, newStatus: string): void {
+    this.deliveryService.updateStatus(id, newStatus).subscribe({
+      next: () => {
+        this.fetchDeliveries(); 
+      },
+      error: (err) => {
+        console.error('Eroare la actualizare status:', err);
+        alert('Nu s-a putut actualiza statusul');
+      }
+    });
+  }
+
+  completeDelivery(id: number): void {
+    const actualCost = prompt('Introduceți costul real al livrării (RON):');
+    if (!actualCost) return;
+
+    const cost = parseFloat(actualCost);
+    if (isNaN(cost)) {
+      alert('Costul introdus nu este valid');
+      return;
+    }
+
+    this.deliveryService.completeDelivery(id, cost).subscribe({
+      next: (response) => {
+        alert(`Livrare completată cu succes! Profit: ${response.profit.toFixed(2)} RON`);
+        this.fetchDeliveries();
+      },
+      error: (err) => {
+        console.error('Eroare la completare:', err);
+        alert('Nu s-a putut completa livrarea');
+      }
+    });
+  }
+
+  getStatusClass(status: string): string {
+    switch(status) {
+      case 'Completed': return 'status-completed';
+      case 'In Progress': return 'status-in-progress';
+      case 'Planned': return 'status-planned';
+      default: return 'status-default';
+    }
   }
 }

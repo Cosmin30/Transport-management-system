@@ -7,10 +7,8 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add controllers
 builder.Services.AddControllers();
 
-// CORS configuration (added BEFORE builder.Build())
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
@@ -21,27 +19,22 @@ builder.Services.AddCors(options =>
     });
 });
 
-// Swagger for API documentation
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Transport API", Version = "v1" });
 });
 
-// Database connection (SQL Server)
 builder.Services.AddDbContext<DataContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// JWT Authentication and Identity
 builder.Services.AddIdentityServices(builder.Configuration);
 
-// Repositories, TokenService, AutoMapper
 builder.Services.AddApplicationServices();
 builder.Services.AddScoped<IDataSeeder, DataSeeder>();
 
 var app = builder.Build();
 
-// Development tools
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -51,7 +44,6 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-// Middleware
 app.UseHttpsRedirection();
 app.UseCors("AllowAll");
 app.UseAuthentication();

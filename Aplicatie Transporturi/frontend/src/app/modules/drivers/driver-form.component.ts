@@ -27,12 +27,10 @@ export class DriverFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // preluăm userId din localStorage
     if (typeof window !== 'undefined') {
       this.userId = localStorage.getItem('userId');
     }
 
-    // inițializăm formularul
     this.form = this.fb.group({
       name: ['', Validators.required],
       licenseNumber: ['', Validators.required],

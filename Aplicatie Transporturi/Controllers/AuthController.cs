@@ -69,7 +69,7 @@ namespace Aplicatie_Transporturi.Controllers
 
             return new UserDto
             {
-                Id = user.Id, // ? Adaug? asta
+                Id = user.Id, 
                 Username = user.Username,
                 Token = _tokenService.CreateToken(user)
             };

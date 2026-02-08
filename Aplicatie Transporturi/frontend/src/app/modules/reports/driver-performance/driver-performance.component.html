@@ -1,0 +1,56 @@
+<div class="driver-performance-container">
+  <h2>Performanță Șoferi</h2>
+
+  <div *ngIf="loading" class="loading">
+    <p>Se încarcă datele...</p>
+  </div>
+
+  <div *ngIf="error" class="error-message">
+    {{ error }}
+  </div>
+
+  <div *ngIf="!loading && !error" class="drivers-table-container">
+    <table class="drivers-table">
+      <thead>
+        <tr>
+          <th>Șofer</th>
+          <th>Livrări Completate</th>
+          <th>Total Km</th>
+          <th>Ultima Livrare</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let driver of drivers" class="driver-row">
+          <td class="driver-name">
+            <div class="name-cell">
+              <span class="driver-icon">👤</span>
+              <strong>{{ driver.driverName }}</strong>
+            </div>
+          </td>
+          <td class="text-center">
+            <span class="badge badge-deliveries">{{ driver.totalDeliveries }}</span>
+          </td>
+          <td class="text-center">
+            <span class="km-value">{{ driver.totalKmDriven | number:'1.0-0' }} km</span>
+          </td>
+          <td class="text-center">
+            <span *ngIf="driver.lastDeliveryDate">
+              {{ driver.lastDeliveryDate | date:'dd/MM/yyyy' }}
+            </span>
+            <span *ngIf="!driver.lastDeliveryDate" class="no-data">-</span>
+          </td>
+          <td class="text-center">
+            <span [class]="getStatusClass(driver.isAvailable)" class="status-badge">
+              {{ getStatusText(driver.isAvailable) }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div *ngIf="drivers.length === 0" class="no-data-message">
+      <p>Nu există date despre performanța șoferilor.</p>
+    </div>
+  </div>
+</div>

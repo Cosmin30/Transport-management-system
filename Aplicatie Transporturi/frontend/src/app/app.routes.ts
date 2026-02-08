@@ -5,7 +5,6 @@ import { DeliveryListComponent } from './modules/deliveries/delivery-list/delive
 import { LoginRegisterComponent } from './modules/auth/login-register/login-register.component';
 
 export const routes: Routes = [
-  // Static page routes (standalone)
   {
     path: 'about',
     loadComponent: () =>
@@ -35,12 +34,34 @@ export const routes: Routes = [
   },
   { path: 'auth', component: LoginRegisterComponent },
 
+  // Dashboard & Reports
+  {
+    path: 'dashboard',
+    loadComponent: () =>
+      import('./modules/dashboard/dashboard.component').then(m => m.DashboardComponent)
+  },
+  {
+    path: 'reports/drivers',
+    loadComponent: () =>
+      import('./modules/reports/driver-performance/driver-performance.component').then(m => m.DriverPerformanceComponent)
+  },
+  {
+    path: 'reports/vehicles',
+    loadComponent: () =>
+      import('./modules/reports/vehicle-utilization/vehicle-utilization.component').then(m => m.VehicleUtilizationComponent)
+  },
+
   // Entities
   { path: 'vehicles', component: VehicleListComponent },
   { path: 'drivers', component: DriverListComponent },
   { path: 'deliveries', component: DeliveryListComponent },
 
-  // Form routes (lazy-loaded)
+  // Delivery specific routes
+  {
+    path: 'deliveries/track/:id',
+    loadComponent: () =>
+      import('./modules/deliveries/delivery-tracking/delivery-tracking.component').then(m => m.DeliveryTrackingComponent)
+  },
   {
     path: 'deliveries/add',
     loadComponent: () =>
@@ -51,6 +72,8 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./modules/deliveries/delivery-form.component').then(m => m.DeliveryFormComponent)
   },
+
+  // Driver routes
   {
     path: 'drivers/add',
     loadComponent: () =>
@@ -61,6 +84,8 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./modules/drivers/driver-form.component').then(m => m.DriverFormComponent)
   },
+
+  // Vehicle routes
   {
     path: 'vehicles/add',
     loadComponent: () =>

@@ -1,4 +1,3 @@
-// Aplicatie_Transporturi/Interfaces/IDriverRepository.cs
 using Aplicatie_Transporturi.Entities;
 
 namespace Aplicatie_Transporturi.Interfaces

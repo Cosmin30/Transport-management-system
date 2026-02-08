@@ -12,6 +12,7 @@ namespace Aplicatie_Transporturi.Extensions
             services.AddScoped<IVehicleRepository, VehicleRepository>();
             services.AddScoped<IDriverRepository, DriverRepository>();
             services.AddScoped<IDeliveryRepository, DeliveryRepository>();
+            services.AddScoped<INotificationService, NotificationService>();
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

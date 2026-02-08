@@ -10,13 +10,42 @@
     <div class="collapse navbar-collapse" id="mainNavbar">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0" *ngIf="isLoggedIn()">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/vehicles" routerLinkActive="active">Vehicule</a>
+          <a class="nav-link" routerLink="/dashboard" routerLinkActive="active">
+            <i class="bi bi-speedometer2 me-1"></i>Dashboard
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/drivers" routerLinkActive="active">Șoferi</a>
+          <a class="nav-link" routerLink="/deliveries" routerLinkActive="active">
+            <i class="bi bi-truck me-1"></i>Curse
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/deliveries" routerLinkActive="active">Curse</a>
+          <a class="nav-link" routerLink="/vehicles" routerLinkActive="active">
+            <i class="bi bi-car-front me-1"></i>Vehicule
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/drivers" routerLinkActive="active">
+            <i class="bi bi-person-badge me-1"></i>Șoferi
+          </a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="reportsDropdown" role="button" 
+             data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-bar-chart me-1"></i>Rapoarte
+          </a>
+          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="reportsDropdown">
+            <li>
+              <a class="dropdown-item" routerLink="/reports/drivers">
+                <i class="bi bi-person-lines-fill me-2"></i>Performanță Șoferi
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" routerLink="/reports/vehicles">
+                <i class="bi bi-speedometer me-2"></i>Utilizare Vehicule
+              </a>
+            </li>
+          </ul>
         </li>
       </ul>
 

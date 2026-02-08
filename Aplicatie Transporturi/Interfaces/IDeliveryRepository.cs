@@ -10,5 +10,10 @@ namespace Aplicatie_Transporturi.Interfaces
         Task UpdateDeliveryAsync(Delivery delivery);
         Task DeleteDeliveryAsync(int id);
         Task UpdateDeliveryStatusAsync(int deliveryId, string newStatus);
+        
+        Task<Vehicle?> GetVehicleByIdAsync(int id);
+        Task<Driver?> GetDriverByIdAsync(int id);
+        Task<IEnumerable<Driver>> GetDriversByUserIdAsync(int userId);
+        Task<IEnumerable<Vehicle>> GetVehiclesByUserIdAsync(int userId);
     }
 }

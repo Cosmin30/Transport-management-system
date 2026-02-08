@@ -1,4 +1,3 @@
-// src/app/app.config.ts
 import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
@@ -11,8 +10,8 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     importProvidersFrom(HttpClientModule),
-    provideAnimations(), // ✅ necesar pentru animații
-    provideClientHydration(), // ✅ dacă folosești Angular SSR
+    provideAnimations(), 
+    provideClientHydration(), 
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

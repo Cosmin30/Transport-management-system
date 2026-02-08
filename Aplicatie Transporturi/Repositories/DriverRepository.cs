@@ -10,11 +10,9 @@ namespace Aplicatie_Transporturi.Repositories
         private readonly DataContext _context;
         public DriverRepository(DataContext context) => _context = context;
 
-        // all drivers
         public async Task<IEnumerable<Driver>> GetDriversAsync()
             => await _context.Drivers.ToListAsync();
 
-        // only this user's drivers
         public async Task<IEnumerable<Driver>> GetDriversByUserIdAsync(int userId)
             => await _context.Drivers
                              .Where(d => d.UserId == userId)

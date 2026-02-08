@@ -50,7 +50,7 @@ export class DriverListComponent implements OnInit {
 
     this.http.delete(`${this.apiUrl}/${id}`).subscribe({
       next: () => {
-        this.fetchDrivers(); // refresh list
+        this.fetchDrivers(); 
       },
       error: (err) => {
         console.error('Eroare la ștergere:', err);

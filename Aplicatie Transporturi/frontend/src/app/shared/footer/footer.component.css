@@ -1,23 +1,140 @@
-/* layout general pentru sticky footer */
-html, body {
-    height: 100%;
-    margin: 0;
+
+
+footer {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+  margin-top: auto;
+  position: relative;
+  overflow: hidden;
+}
+
+footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #00d4ff, transparent);
+  animation: shine 3s infinite;
+}
+
+@keyframes shine {
+  0%, 100% { transform: translateX(-100%); }
+  50% { transform: translateX(100%); }
+}
+
+h5, h6 {
+  color: #00d4ff;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+h5 i, h6 i {
+  color: #00d4ff;
+}
+
+/* === LINKS === */
+ul.list-unstyled li {
+  margin-bottom: 10px;
+  transition: transform 0.2s ease;
+}
+
+ul.list-unstyled li:hover {
+  transform: translateX(5px);
+}
+
+ul.list-unstyled a {
+  color: rgba(255, 255, 255, 0.75) !important;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: inline-block;
+  padding: 5px 0;
+}
+
+ul.list-unstyled a:hover {
+  color: #00d4ff !important;
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+}
+
+ul.list-unstyled a i {
+  color: #00d4ff;
+  margin-right: 8px;
+  font-size: 14px;
+}
+
+/* === CONTACT INFO === */
+p.small {
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.8;
+  transition: color 0.3s ease;
+}
+
+p.small:hover {
+  color: #00d4ff;
+}
+
+p.small i {
+  color: #00d4ff;
+  width: 20px;
+  text-align: center;
+}
+
+/* === SOCIAL ICONS === */
+.text-center a {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 20px;
+  margin: 0 12px;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.text-center a:hover {
+  color: #00d4ff;
+  transform: translateY(-3px) scale(1.1);
+  text-shadow: 0 0 15px rgba(0, 212, 255, 0.7);
+}
+
+.text-muted {
+  color: rgba(255, 255, 255, 0.5) !important;
+  font-size: 13px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  footer {
+    padding: 30px 15px 20px !important;
   }
-  
-  body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+
+  h5, h6 {
+    font-size: 16px;
+    margin-bottom: 15px;
   }
-  
-  app-root {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
+
+  .col-md-4 {
+    margin-bottom: 25px;
   }
-  
-  .router-container {
-    flex: 1;
+
+  .text-center a {
+    font-size: 18px;
+    margin: 0 10px;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+footer {
+  animation: fadeIn 1s ease;
+}
+
     display: flex;
     flex-direction: column;
   }

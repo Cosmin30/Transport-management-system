@@ -13,7 +13,6 @@ namespace Aplicatie_Transporturi.Services
 
         public async Task SeedDataForUser(int userId)
         {
-            // Evită duplicarea datelor dacă au fost deja adăugate
             if (_context.Vehicles.Any(v => v.UserId == userId)) return;
 
             var vehicleModels = new[]
