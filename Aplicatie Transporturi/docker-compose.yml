@@ -1,21 +1,21 @@
 version: '3.8'
 
 services:
-  # PostgreSQL Database
+  # SQL Server Database
   db:
-    image: postgres:16-alpine
+    image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: transport-db
     restart: unless-stopped
     environment:
-      POSTGRES_USER: transport_user
-      POSTGRES_PASSWORD: Transport@2024!
-      POSTGRES_DB: transport_db
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "Transport@2024!"
+      MSSQL_PID: "Developer"
     ports:
-      - "5432:5432"
+      - "1433:1433"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - mssql_data:/var/opt/mssql
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U transport_user -d transport_db"]
+      test: /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "Transport@2024!" -Q "SELECT 1" -C || exit 1
       interval: 10s
       timeout: 5s
       retries: 5
@@ -32,7 +32,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=http://+:5000
-      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=transport_db;Username=transport_user;Password=Transport@2024!
+      - ConnectionStrings__DefaultConnection=Server=db,1433;Database=AplicatieTransporturi;User Id=sa;Password=Transport@2024!;TrustServerCertificate=True;MultipleActiveResultSets=true
       - TokenKey=zImQYFBS3PKw2RsDSb108eNXfOCZ/O27fX2HUZ6VIwwi+JAv708l8ZJJjNzhsDrqc0wbsUNLfoXtlXirti29BQ==
     ports:
       - "5000:5000"
@@ -61,4 +61,4 @@ networks:
     driver: bridge
 
 volumes:
-  postgres_data:
+  mssql_data:
