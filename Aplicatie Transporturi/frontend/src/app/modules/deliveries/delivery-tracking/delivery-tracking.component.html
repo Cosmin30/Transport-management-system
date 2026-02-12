@@ -1,20 +1,55 @@
 <div class="tracking-container">
-  <h2>Urmărire Livrare #{{ deliveryId }}</h2>
+  <div class="tracking-header">
+    <h2><i class="bi bi-geo-alt-fill"></i> Urmărire Cursă #{{ deliveryId }}</h2>
+    <div class="header-actions" *ngIf="delivery">
+      <span class="status-badge" [ngClass]="'status-' + (delivery.status || 'planned').toLowerCase().replace(' ', '-')">
+        {{ delivery.status }}
+      </span>
+    </div>
+  </div>
+
+  <!-- Delivery Info -->
+  <div class="delivery-info" *ngIf="delivery">
+    <div class="info-row">
+      <div class="info-item">
+        <i class="bi bi-arrow-up-circle"></i>
+        <div>
+          <span class="label">Plecare</span>
+          <span class="value">{{ delivery.pickupLocation }}</span>
+        </div>
+      </div>
+      <div class="info-item">
+        <i class="bi bi-arrow-down-circle"></i>
+        <div>
+          <span class="label">Destinație</span>
+          <span class="value">{{ delivery.dropoffLocation }}</span>
+        </div>
+      </div>
+      <div class="info-item">
+        <i class="bi bi-speedometer2"></i>
+        <div>
+          <span class="label">Distanță</span>
+          <span class="value">{{ delivery.distanceKm }} km</span>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <div *ngIf="loading" class="loading">
+    <div class="spinner"></div>
     <p>Se încarcă locația...</p>
   </div>
 
   <div *ngIf="error" class="error-message">
-    {{ error }}
+    <i class="bi bi-exclamation-triangle"></i> {{ error }}
   </div>
 
   <div *ngIf="!loading && !error && currentLocation" class="tracking-content">
     <div class="location-card">
       <div class="card-header">
-        <h3>Locație Curentă</h3>
+        <h3><i class="bi bi-pin-map"></i> Locație Curentă</h3>
         <button (click)="refreshLocation()" class="refresh-btn" title="Actualizează">
-          
+          <i class="bi bi-arrow-clockwise"></i>
         </button>
       </div>
 
@@ -34,18 +69,104 @@
       </div>
 
       <div class="action-buttons">
-        <button (click)="openInMaps()" class="btn-maps">
-           Deschide în Google Maps
+        <button (click)="openInMaps()" class="btn btn-maps">
+          <i class="bi bi-map"></i> Deschide în Google Maps
+        </button>
+        <button (click)="openLocationModal()" class="btn btn-update">
+          <i class="bi bi-geo"></i> Actualizează Locația
         </button>
       </div>
     </div>
 
     <div class="info-message">
-      <p> Locația se actualizează automat la fiecare 30 de secunde</p>
+      <i class="bi bi-info-circle"></i> Locația se actualizează automat la fiecare 30 de secunde
     </div>
   </div>
 
   <div *ngIf="!loading && !error && !currentLocation" class="no-location">
-    <p> Nu există informații despre locație pentru această livrare</p>
+    <i class="bi bi-geo-alt"></i>
+    <p>Nu există informații despre locație pentru această cursă</p>
+    <button (click)="openLocationModal()" class="btn btn-primary">
+      <i class="bi bi-plus-circle"></i> Adaugă Locație
+    </button>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="bottom-actions" *ngIf="delivery && delivery.status !== 'Completed'">
+    <button (click)="openCompleteModal()" class="btn btn-complete">
+      <i class="bi bi-check-circle"></i> Finalizează Cursa
+    </button>
+  </div>
+
+  <!-- Complete Modal -->
+  <div class="modal-overlay" *ngIf="showCompleteModal" (click)="closeCompleteModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3><i class="bi bi-check-circle"></i> Finalizează Cursa</h3>
+        <button class="close-btn" (click)="closeCompleteModal()">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Introduceți costul actual al cursei pentru a calcula profitul:</p>
+        <div class="form-group">
+          <label>Cost Estimat:</label>
+          <span class="estimated">{{ delivery?.estimatedCost | number:'1.2-2' }} RON</span>
+        </div>
+        <div class="form-group">
+          <label for="actualCost">Cost Actual (RON):</label>
+          <input type="number" id="actualCost" [(ngModel)]="actualCost" class="form-control" step="0.01">
+        </div>
+        <div class="form-group">
+          <label>Venit:</label>
+          <span class="revenue">{{ delivery?.revenue | number:'1.2-2' }} RON</span>
+        </div>
+        <div class="form-group profit-preview">
+          <label>Profit Estimat:</label>
+          <span class="profit" [class.negative]="(delivery?.revenue || 0) - actualCost < 0">
+            {{ ((delivery?.revenue || 0) - actualCost) | number:'1.2-2' }} RON
+          </span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="closeCompleteModal()">Anulează</button>
+        <button class="btn btn-success" (click)="confirmComplete()" [disabled]="completing">
+          <span *ngIf="completing"><i class="bi bi-hourglass-split"></i> Se procesează...</span>
+          <span *ngIf="!completing"><i class="bi bi-check-lg"></i> Confirmă</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Location Modal -->
+  <div class="modal-overlay" *ngIf="showLocationModal" (click)="closeLocationModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3><i class="bi bi-geo"></i> Actualizează Locația</h3>
+        <button class="close-btn" (click)="closeLocationModal()">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="latitude">Latitudine:</label>
+          <input type="number" id="latitude" [(ngModel)]="newLatitude" class="form-control" step="0.000001">
+        </div>
+        <div class="form-group">
+          <label for="longitude">Longitudine:</label>
+          <input type="number" id="longitude" [(ngModel)]="newLongitude" class="form-control" step="0.000001">
+        </div>
+        <button class="btn btn-gps" (click)="getCurrentPosition()">
+          <i class="bi bi-crosshair"></i> Folosește locația mea curentă
+        </button>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="closeLocationModal()">Anulează</button>
+        <button class="btn btn-primary" (click)="confirmLocationUpdate()" [disabled]="updatingLocation">
+          <span *ngIf="updatingLocation"><i class="bi bi-hourglass-split"></i> Se actualizează...</span>
+          <span *ngIf="!updatingLocation"><i class="bi bi-check-lg"></i> Salvează</span>
+        </button>
+      </div>
+    </div>
   </div>
 </div>

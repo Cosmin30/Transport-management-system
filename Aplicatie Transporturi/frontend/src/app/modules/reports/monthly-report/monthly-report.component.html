@@ -1,0 +1,168 @@
+<div class="monthly-report-page">
+  <div class="page-header">
+    <div class="header-content">
+      <h1><i class="bi bi-calendar3"></i> Raport Lunar</h1>
+      <p>Analiză detaliată a veniturilor și profitului pe ultimele 12 luni</p>
+    </div>
+    <a routerLink="/dashboard" class="btn btn-back">
+      <i class="bi bi-arrow-left"></i> Înapoi la Dashboard
+    </a>
+  </div>
+
+  <div *ngIf="loading" class="loading-state">
+    <div class="spinner"></div>
+    <p>Se încarcă raportul...</p>
+  </div>
+
+  <div *ngIf="error" class="error-state">
+    <i class="bi bi-exclamation-triangle"></i>
+    <p>{{ error }}</p>
+    <button (click)="loadMonthlyReport()" class="btn btn-retry">
+      <i class="bi bi-arrow-clockwise"></i> Reîncearcă
+    </button>
+  </div>
+
+  <div *ngIf="!loading && !error" class="report-content">
+    <!-- Summary Cards -->
+    <div class="summary-cards">
+      <div class="summary-card">
+        <div class="card-icon revenue-icon">
+          <i class="bi bi-cash-stack"></i>
+        </div>
+        <div class="card-content">
+          <span class="card-label">Venit Total</span>
+          <span class="card-value">{{ totalRevenue | number:'1.2-2' }} RON</span>
+        </div>
+      </div>
+
+      <div class="summary-card">
+        <div class="card-icon profit-icon">
+          <i class="bi bi-graph-up-arrow"></i>
+        </div>
+        <div class="card-content">
+          <span class="card-label">Profit Total</span>
+          <span class="card-value" [class.negative]="totalProfit < 0">{{ totalProfit | number:'1.2-2' }} RON</span>
+        </div>
+      </div>
+
+      <div class="summary-card">
+        <div class="card-icon deliveries-icon">
+          <i class="bi bi-truck"></i>
+        </div>
+        <div class="card-content">
+          <span class="card-label">Curse Finalizate</span>
+          <span class="card-value">{{ totalDeliveries }}</span>
+        </div>
+      </div>
+
+      <div class="summary-card">
+        <div class="card-icon avg-icon">
+          <i class="bi bi-calculator"></i>
+        </div>
+        <div class="card-content">
+          <span class="card-label">Media Lunară</span>
+          <span class="card-value">{{ avgMonthlyProfit | number:'1.2-2' }} RON</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chart Section -->
+    <div class="chart-section" *ngIf="monthlyData.length > 0">
+      <h2><i class="bi bi-bar-chart"></i> Evoluție Venituri & Profit</h2>
+      
+      <div class="chart-container">
+        <div class="chart-bars">
+          <div class="bar-group" *ngFor="let month of monthlyData">
+            <div class="bars">
+              <div class="bar revenue-bar" 
+                   [style.height.%]="getBarHeight(month.totalRevenue, maxRevenue)"
+                   [title]="'Venit: ' + (month.totalRevenue | number:'1.2-2') + ' RON'">
+              </div>
+              <div class="bar profit-bar" 
+                   [class.negative]="month.totalProfit < 0"
+                   [style.height.%]="getBarHeight(abs(month.totalProfit), maxProfit)"
+                   [title]="'Profit: ' + (month.totalProfit | number:'1.2-2') + ' RON'">
+              </div>
+            </div>
+            <span class="bar-label">{{ getMonthName(month.month).substring(0, 3) }}</span>
+          </div>
+        </div>
+        
+        <div class="chart-legend">
+          <div class="legend-item">
+            <span class="legend-color revenue-color"></span>
+            <span>Venit</span>
+          </div>
+          <div class="legend-item">
+            <span class="legend-color profit-color"></span>
+            <span>Profit</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Data Table -->
+    <div class="table-section">
+      <h2><i class="bi bi-table"></i> Date Detaliate</h2>
+      
+      <div class="table-container" *ngIf="monthlyData.length > 0">
+        <table>
+          <thead>
+            <tr>
+              <th>Luna</th>
+              <th>An</th>
+              <th>Curse</th>
+              <th>Venit</th>
+              <th>Profit</th>
+              <th>Marjă</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let month of monthlyData">
+              <td class="month-cell">
+                <i class="bi bi-calendar"></i>
+                {{ getMonthName(month.month) }}
+              </td>
+              <td>{{ month.year }}</td>
+              <td>
+                <span class="delivery-count">{{ month.totalDeliveries }}</span>
+              </td>
+              <td class="revenue-cell">{{ month.totalRevenue | number:'1.2-2' }} RON</td>
+              <td class="profit-cell" [class.negative]="month.totalProfit < 0">
+                {{ month.totalProfit | number:'1.2-2' }} RON
+              </td>
+              <td class="margin-cell">
+                <span class="margin-badge" 
+                      [class.positive]="month.totalRevenue > 0 && (month.totalProfit / month.totalRevenue) * 100 > 0"
+                      [class.negative]="month.totalRevenue > 0 && (month.totalProfit / month.totalRevenue) * 100 < 0">
+                  {{ month.totalRevenue > 0 ? ((month.totalProfit / month.totalRevenue) * 100 | number:'1.1-1') : 0 }}%
+                </span>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr class="totals-row">
+              <td colspan="2"><strong>TOTAL</strong></td>
+              <td><strong>{{ totalDeliveries }}</strong></td>
+              <td><strong>{{ totalRevenue | number:'1.2-2' }} RON</strong></td>
+              <td [class.negative]="totalProfit < 0"><strong>{{ totalProfit | number:'1.2-2' }} RON</strong></td>
+              <td>
+                <span class="margin-badge" 
+                      [class.positive]="totalRevenue > 0 && (totalProfit / totalRevenue) * 100 > 0"
+                      [class.negative]="totalRevenue > 0 && (totalProfit / totalRevenue) * 100 < 0">
+                  {{ totalRevenue > 0 ? ((totalProfit / totalRevenue) * 100 | number:'1.1-1') : 0 }}%
+                </span>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <div class="no-data" *ngIf="monthlyData.length === 0">
+        <i class="bi bi-inbox"></i>
+        <p>Nu există date pentru raportul lunar</p>
+        <p class="hint">Finalizează curse pentru a genera rapoarte</p>
+      </div>
+    </div>
+  </div>
+</div>

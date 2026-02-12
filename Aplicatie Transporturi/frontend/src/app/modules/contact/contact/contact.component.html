@@ -1,53 +1,125 @@
-<div class="container mt-5">
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <!-- Card de contact -->
-        <div class="card shadow rounded-4 border-0">
-          <div class="card-body p-4">
-            <h2 class="card-title text-center mb-4">Contact</h2>
-  
-            <div class="mb-3 d-flex align-items-start">
-              <i class="fas fa-envelope fa-lg me-3 mt-1 text-primary"></i>
-              <div>
-                <strong>Email:</strong><br>
-                <a href="mailto:contact&#64;transportapp.ro" class="text-decoration-none">
-                  contact&#64;transportapp.ro
-                </a>
-              </div>
+<div class="contact-page">
+  <div class="hero-section">
+    <div class="container">
+      <h1 class="hero-title">
+        <i class="bi bi-envelope-fill me-3"></i>
+        Contactează-ne
+      </h1>
+      <p class="hero-subtitle">
+        Suntem aici să te ajutăm! Scrie-ne și îți vom răspunde cât mai curând posibil.
+      </p>
+    </div>
+  </div>
+
+  <div class="container content-section">
+    <div class="row g-4">
+      <div class="col-lg-6">
+        <div class="contact-info">
+          <h2 class="mb-4">Informații de contact</h2>
+          
+          <div class="contact-item">
+            <div class="contact-icon contact-icon-primary">
+              <i class="bi bi-envelope-fill"></i>
             </div>
-  
-            <div class="mb-3 d-flex align-items-start">
-              <i class="fas fa-phone-alt fa-lg me-3 mt-1 text-success"></i>
-              <div>
-                <strong>Telefon:</strong><br>
-                0740 123 456
-              </div>
-            </div>
-  
-            <div class="d-flex align-items-start">
-              <i class="fas fa-info-circle fa-lg me-3 mt-1 text-secondary"></i>
-              <div>
-                Ne poți scrie oricând pentru colaborări sau întrebări generale. Echipa noastră îți va răspunde în cel mai scurt timp.
-              </div>
+            <div class="contact-details">
+              <h4>Email</h4>
+              <a href="mailto:contact&#64;transportapp.ro">contact&#64;transportapp.ro</a>
+              <p class="text-muted mt-2">Răspundem în maxim 24 de ore</p>
             </div>
           </div>
-        </div>
-  
-        <!-- Hartă Google Maps -->
-        <div class="mt-4">
-          <div class="ratio ratio-16x9 rounded-4 shadow">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2849.4039349063466!2d26.09630651553075!3d44.43966307910278!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40b1ff48ab15d165%3A0xf9853be9b1315e38!2sBucure%C8%99ti%2C%20Romania!5e0!3m2!1sen!2sro!4v1680000000000!5m2!1sen!2sro"
-              width="600"
-              height="450"
-              style="border:0;"
-              allowfullscreen=""
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
+
+          <div class="contact-item">
+            <div class="contact-icon contact-icon-success">
+              <i class="bi bi-telephone-fill"></i>
+            </div>
+            <div class="contact-details">
+              <h4>Telefon</h4>
+              <a href="tel:+40740123456">+40 740 123 456</a>
+              <p class="text-muted mt-2">Luni - Vineri, 09:00 - 18:00</p>
+            </div>
+          </div>
+
+          <div class="contact-item">
+            <div class="contact-icon contact-icon-warning">
+              <i class="bi bi-geo-alt-fill"></i>
+            </div>
+            <div class="contact-details">
+              <h4>Adresă</h4>
+              <p>Str. Exemplu nr. 123<br>București, România</p>
+            </div>
+          </div>
+
+          <div class="social-links">
+            <h4 class="mb-3">Urmărește-ne</h4>
+            <div class="social-icons">
+              <a href="#" class="social-icon">
+                <i class="bi bi-facebook"></i>
+              </a>
+              <a href="#" class="social-icon">
+                <i class="bi bi-linkedin"></i>
+              </a>
+              <a href="#" class="social-icon">
+                <i class="bi bi-twitter"></i>
+              </a>
+              <a href="#" class="social-icon">
+                <i class="bi bi-instagram"></i>
+              </a>
+            </div>
           </div>
         </div>
       </div>
+
+      <div class="col-lg-6">
+        <div class="contact-form-card">
+          <h3 class="mb-4">Trimite-ne un mesaj</h3>
+          <form>
+            <div class="mb-3">
+              <label for="name" class="form-label">Nume complet</label>
+              <input type="text" class="form-control" id="name" placeholder="Ion Popescu">
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" class="form-control" id="email" placeholder="ion.popescu&#64;exemplu.ro">
+            </div>
+            <div class="mb-3">
+              <label for="phone" class="form-label">Telefon</label>
+              <input type="tel" class="form-control" id="phone" placeholder="+40 740 123 456">
+            </div>
+            <div class="mb-3">
+              <label for="subject" class="form-label">Subiect</label>
+              <select class="form-select" id="subject">
+                <option selected>Alege un subiect</option>
+                <option value="sales">Vânzări</option>
+                <option value="support">Suport tehnic</option>
+                <option value="partnership">Parteneriat</option>
+                <option value="other">Altele</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="message" class="form-label">Mesaj</label>
+              <textarea class="form-control" id="message" rows="5" placeholder="Scrie-ne mesajul tău aici..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">
+              <i class="bi bi-send me-2"></i>Trimite mesajul
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="map-section">
+      <h2 class="text-center mb-4">Locația noastră</h2>
+      <div class="map-container">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2849.4039349063466!2d26.09630651553075!3d44.43966307910278!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40b1ff48ab15d165%3A0xf9853be9b1315e38!2sBucure%C8%99ti%2C%20Romania!5e0!3m2!1sen!2sro!4v1680000000000!5m2!1sen!2sro"
+          width="100%"
+          height="100%"
+          style="border:0;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
     </div>
   </div>
-  
+</div>

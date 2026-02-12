@@ -26,7 +26,20 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 builder.Services.AddDbContext<DataContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+{
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    
+    // Use PostgreSQL if connection string contains "Host=" (Docker/Production)
+    if (connectionString != null && connectionString.Contains("Host="))
+    {
+        options.UseNpgsql(connectionString);
+    }
+    else
+    {
+        // Use SQL Server for local development
+        options.UseSqlServer(connectionString);
+    }
+});
 
 builder.Services.AddIdentityServices(builder.Configuration);
 
@@ -35,16 +48,20 @@ builder.Services.AddScoped<IDataSeeder, DataSeeder>();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+// Apply migrations automatically in production
+using (var scope = app.Services.CreateScope())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Transport API v1");
-    });
+    var db = scope.ServiceProvider.GetRequiredService<DataContext>();
+    db.Database.Migrate();
 }
 
-app.UseHttpsRedirection();
+// Enable Swagger in all environments for Docker
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Transport API v1");
+});
+
 app.UseCors("AllowAll");
 app.UseAuthentication();
 app.UseAuthorization();

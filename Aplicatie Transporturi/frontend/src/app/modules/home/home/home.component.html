@@ -1,73 +1,252 @@
-<div class="home-container text-center" [@fadeIn]>
-  <h1>Bine ai venit la <span class="brand">Transport Management</span></h1>
-  <p class="lead">
-    O platformă completă pentru gestionarea eficientă a flotei, șoferilor și curselor în timp real.
-  </p>
+<div class="home-page">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1 class="hero-title" [@fadeIn]>
+        <i class="bi bi-truck-front"></i>
+        Transport Management System
+      </h1>
+      <p class="hero-subtitle">
+        Soluția completă pentru gestionarea inteligentă a flotei tale de transport
+      </p>
+      <div class="hero-buttons">
+        <a routerLink="/auth" class="btn btn-primary btn-lg me-3">
+          <i class="bi bi-rocket-takeoff me-2"></i>
+          Începe acum
+        </a>
+        <a routerLink="/about" class="btn btn-outline-light btn-lg">
+          <i class="bi bi-info-circle me-2"></i>
+          Află mai multe
+        </a>
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      <i class="bi bi-chevron-down"></i>
+    </div>
+  </section>
 
-  <div class="section">
-    <h2>Ultimele Vehicule</h2>
-    <ng-container *ngIf="vehicles && vehicles.length > 0; else noVehicles">
-      <div class="row justify-content-center">
-        <div class="col-md-4" *ngFor="let v of vehicles.slice(-3).reverse()">
-          <div class="card mb-4 shadow-sm">
-            <div class="card-body">
-              <h5 class="card-title">{{ v.model }}</h5>
-              <p class="card-text">Nr. înmatriculare: {{ v.licensePlate }}</p>
-              <p class="card-text">An: {{ v.year }}</p>
+  <!-- Features Section -->
+  <section class="features-section">
+    <div class="container">
+      <h2 class="section-title text-center mb-5">
+        <i class="bi bi-stars me-2"></i>
+        Caracteristici principale
+      </h2>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="feature-card">
+            <div class="feature-icon feature-icon-primary">
+              <i class="bi bi-geo-alt-fill"></i>
             </div>
+            <h3>Tracking în timp real</h3>
+            <p>Monitorizează toate cursele și vehiculele în timp real cu GPS integrat</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature-card">
+            <div class="feature-icon feature-icon-success">
+              <i class="bi bi-speedometer2"></i>
+            </div>
+            <h3>Dashboard intuitiv</h3>
+            <p>Vizualizează toate informațiile importante dintr-o singură privire</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature-card">
+            <div class="feature-icon feature-icon-warning">
+              <i class="bi bi-graph-up"></i>
+            </div>
+            <h3>Rapoarte detaliate</h3>
+            <p>Generează rapoarte complete despre performanță și eficiență</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature-card">
+            <div class="feature-icon feature-icon-info">
+              <i class="bi bi-people-fill"></i>
+            </div>
+            <h3>Gestionare șoferi</h3>
+            <p>Administrează echipa de șoferi și monitorizează performanțele</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature-card">
+            <div class="feature-icon feature-icon-danger">
+              <i class="bi bi-truck"></i>
+            </div>
+            <h3>Management flotă</h3>
+            <p>Ține evidența vehiculelor, mentenanței și consumului</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature-card">
+            <div class="feature-icon feature-icon-secondary">
+              <i class="bi bi-shield-check"></i>
+            </div>
+            <h3>Securitate garantată</h3>
+            <p>Date protejate cu criptare modernă și backup automat</p>
           </div>
         </div>
       </div>
-    </ng-container>
-    <ng-template #noVehicles>
-      <p class="text-muted">Nu există vehicule înregistrate momentan.</p>
-    </ng-template>
-  </div>
+    </div>
+  </section>
 
-  <!-- Ultimii Șoferi -->
-  <div class="section">
-    <h2>Ultimii Șoferi</h2>
-    <ng-container *ngIf="drivers && drivers.length > 0; else noDrivers">
-      <div class="row justify-content-center">
-        <div class="col-md-4" *ngFor="let d of drivers.slice(-3).reverse()">
-          <div class="card mb-4 shadow-sm">
-            <div class="card-body">
-              <h5 class="card-title">{{ d.name }}</h5>
-              <p class="card-text">Permis: {{ d.licenseNumber }}</p>
-              <p class="card-text">
-                Disponibil:
-                <span [class.text-success]="d.isAvailable" [class.text-danger]="!d.isAvailable">
-                  {{ d.isAvailable ? 'Da' : 'Nu' }}
-                </span>
-              </p>
-            </div>
+  <!-- Stats Section -->
+  <section class="stats-section">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-3 col-6 mb-4">
+          <div class="stat-item">
+            <i class="bi bi-truck-front-fill"></i>
+            <h3 class="stat-number">{{ vehicles?.length || 0 }}</h3>
+            <p class="stat-label">Vehicule Active</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-6 mb-4">
+          <div class="stat-item">
+            <i class="bi bi-people-fill"></i>
+            <h3 class="stat-number">{{ drivers?.length || 0 }}</h3>
+            <p class="stat-label">Șoferi Înregistrați</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-6 mb-4">
+          <div class="stat-item">
+            <i class="bi bi-box-seam"></i>
+            <h3 class="stat-number">{{ deliveries?.length || 0 }}</h3>
+            <p class="stat-label">Curse Totale</p>
+          </div>
+        </div>
+        <div class="col-md-3 col-6 mb-4">
+          <div class="stat-item">
+            <i class="bi bi-speedometer"></i>
+            <h3 class="stat-number">99.9%</h3>
+            <p class="stat-label">Uptime</p>
           </div>
         </div>
       </div>
-    </ng-container>
-    <ng-template #noDrivers>
-      <p class="text-muted">Nu există șoferi înregistrați momentan.</p>
-    </ng-template>
-  </div>
+    </div>
+  </section>
 
-  <!-- Ultimele Curse -->
-  <div class="section">
-    <h2>Ultimele Curse</h2>
-    <ng-container *ngIf="deliveries && deliveries.length > 0; else noDeliveries">
-      <div class="row justify-content-center">
-        <div class="col-md-4" *ngFor="let c of deliveries.slice(-3).reverse()">
-          <div class="card mb-4 shadow-sm">
-            <div class="card-body">
-              <h5 class="card-title">{{ c.pickupLocation }} → {{ c.dropoffLocation }}</h5>
-              <p class="card-text">Data programată: {{ c.scheduledDate | date:'dd/MM/yyyy HH:mm' }}</p>
-              <p class="card-text">Status: {{ c.status }}</p>
-            </div>
+  <!-- Recent Activity Section -->
+  <section class="activity-section" *ngIf="isLoggedIn()">
+    <div class="container">
+      <h2 class="section-title text-center mb-5">
+        <i class="bi bi-clock-history me-2"></i>
+        Activitate recentă
+      </h2>
+      
+      <div class="row">
+        <!-- Recent Vehicles -->
+        <div class="col-lg-4">
+          <div class="activity-card">
+            <h4>
+              <i class="bi bi-truck me-2"></i>
+              Vehicule recente
+            </h4>
+            <ng-container *ngIf="vehicles && vehicles.length > 0; else noVehicles">
+              <div class="activity-list">
+                <div class="activity-item" *ngFor="let v of vehicles.slice(-3).reverse()">
+                  <div class="activity-icon">
+                    <i class="bi bi-car-front"></i>
+                  </div>
+                  <div class="activity-details">
+                    <h5>{{ v.model }}</h5>
+                    <p>{{ v.licensePlate }}</p>
+                  </div>
+                </div>
+              </div>
+              <a routerLink="/vehicles" class="view-all-link">Vezi toate vehiculele →</a>
+            </ng-container>
+            <ng-template #noVehicles>
+              <p class="no-data">Nu există vehicule înregistrate</p>
+              <a routerLink="/vehicles" class="btn btn-outline-primary btn-sm mt-2">
+                <i class="bi bi-plus-circle me-1"></i>
+                Adaugă vehicul
+              </a>
+            </ng-template>
+          </div>
+        </div>
+
+        <!-- Recent Drivers -->
+        <div class="col-lg-4">
+          <div class="activity-card">
+            <h4>
+              <i class="bi bi-person-badge me-2"></i>
+              Șoferi recenți
+            </h4>
+            <ng-container *ngIf="drivers && drivers.length > 0; else noDrivers">
+              <div class="activity-list">
+                <div class="activity-item" *ngFor="let d of drivers.slice(-3).reverse()">
+                  <div class="activity-icon">
+                    <i class="bi bi-person"></i>
+                  </div>
+                  <div class="activity-details">
+                    <h5>{{ d.name }}</h5>
+                    <p>
+                      <span [class.badge-success]="d.isAvailable" [class.badge-danger]="!d.isAvailable" class="badge">
+                        {{ d.isAvailable ? 'Disponibil' : 'Indisponibil' }}
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <a routerLink="/drivers" class="view-all-link">Vezi toți șoferii →</a>
+            </ng-container>
+            <ng-template #noDrivers>
+              <p class="no-data">Nu există șoferi înregistrați</p>
+              <a routerLink="/drivers" class="btn btn-outline-primary btn-sm mt-2">
+                <i class="bi bi-plus-circle me-1"></i>
+                Adaugă șofer
+              </a>
+            </ng-template>
+          </div>
+        </div>
+
+        <!-- Recent Deliveries -->
+        <div class="col-lg-4">
+          <div class="activity-card">
+            <h4>
+              <i class="bi bi-box-seam me-2"></i>
+              Curse recente
+            </h4>
+            <ng-container *ngIf="deliveries && deliveries.length > 0; else noDeliveries">
+              <div class="activity-list">
+                <div class="activity-item" *ngFor="let c of deliveries.slice(-3).reverse()">
+                  <div class="activity-icon">
+                    <i class="bi bi-arrow-right-circle"></i>
+                  </div>
+                  <div class="activity-details">
+                    <h5>{{ c.pickupLocation }} → {{ c.dropoffLocation }}</h5>
+                    <p>{{ c.scheduledDate | date:'dd/MM/yyyy HH:mm' }}</p>
+                  </div>
+                </div>
+              </div>
+              <a routerLink="/deliveries" class="view-all-link">Vezi toate cursele →</a>
+            </ng-container>
+            <ng-template #noDeliveries>
+              <p class="no-data">Nu există curse înregistrate</p>
+              <a routerLink="/deliveries" class="btn btn-outline-primary btn-sm mt-2">
+                <i class="bi bi-plus-circle me-1"></i>
+                Adaugă cursă
+              </a>
+            </ng-template>
           </div>
         </div>
       </div>
-    </ng-container>
-    <ng-template #noDeliveries>
-      <p class="text-muted">Nu există curse înregistrate momentan.</p>
-    </ng-template>
-  </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="container text-center">
+      <h2>Gata să începi?</h2>
+      <p>Alătură-te miilor de companii care și-au optimizat operațiunile cu Transport Management</p>
+      <a routerLink="/auth" class="btn btn-light btn-lg">
+        <i class="bi bi-arrow-right-circle me-2"></i>
+        Începe gratuit
+      </a>
+    </div>
+  </section>
 </div>
+

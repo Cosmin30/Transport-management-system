@@ -50,6 +50,11 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./modules/reports/vehicle-utilization/vehicle-utilization.component').then(m => m.VehicleUtilizationComponent)
   },
+  {
+    path: 'reports/monthly',
+    loadComponent: () =>
+      import('./modules/reports/monthly-report/monthly-report.component').then(m => m.MonthlyReportComponent)
+  },
 
   // Entities
   { path: 'vehicles', component: VehicleListComponent },

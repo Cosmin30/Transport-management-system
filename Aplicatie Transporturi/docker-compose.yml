@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  db:
+    image: postgres:16-alpine
+    container_name: transport-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: transport_user
+      POSTGRES_PASSWORD: Transport@2024!
+      POSTGRES_DB: transport_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U transport_user -d transport_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - transport-network
+
+  # .NET Backend API
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: transport-backend
+    restart: unless-stopped
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:5000
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=transport_db;Username=transport_user;Password=Transport@2024!
+      - TokenKey=zImQYFBS3PKw2RsDSb108eNXfOCZ/O27fX2HUZ6VIwwi+JAv708l8ZJJjNzhsDrqc0wbsUNLfoXtlXirti29BQ==
+    ports:
+      - "5000:5000"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - transport-network
+
+  # Angular Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: transport-frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - transport-network
+
+networks:
+  transport-network:
+    driver: bridge
+
+volumes:
+  postgres_data:

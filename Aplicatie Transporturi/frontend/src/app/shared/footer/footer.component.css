@@ -134,14 +134,6 @@ p.small i {
 footer {
   animation: fadeIn 1s ease;
 }
-
-    display: flex;
-    flex-direction: column;
-  }
-  
-  app-footer {
-    margin-top: auto;
-  }
   .footer-copy {
   color: white !important;
   text-align: center;

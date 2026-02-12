@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { HomeService } from 'src/app/core/services/home.service';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -24,11 +25,18 @@ export class HomeComponent implements OnInit {
   drivers: any[] = [];
   deliveries: any[] = [];
 
-  constructor(private homeService: HomeService) {}
+  constructor(
+    private homeService: HomeService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.homeService.getVehicles().subscribe(data => this.vehicles = data as any[]);
     this.homeService.getDrivers().subscribe(data => this.drivers = data as any[]);
     this.homeService.getDeliveries().subscribe(data => this.deliveries = data as any[]);
+  }
+
+  isLoggedIn(): boolean {
+    return this.authService.isAuthenticated();
   }
 }
