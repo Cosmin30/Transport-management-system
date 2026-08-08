@@ -1,6 +1,7 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+﻿import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { VehicleListComponent } from './vehicle-list.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { provideRouter } from '@angular/router';
 import { VehicleService } from 'src/app/core/services/vehicle.service';
 import { of, throwError } from 'rxjs';
 
@@ -13,9 +14,9 @@ describe('VehicleListComponent', () => {
     mockVehicleService = jasmine.createSpyObj('VehicleService', ['getVehicles']);
 
     await TestBed.configureTestingModule({
-      declarations: [VehicleListComponent],
-      imports: [HttpClientTestingModule],
+      imports: [VehicleListComponent, HttpClientTestingModule],
       providers: [
+        provideRouter([]),
         { provide: VehicleService, useValue: mockVehicleService }
       ]
     }).compileComponents();

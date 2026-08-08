@@ -1,4 +1,5 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+﻿import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 
 import { DriverListComponent } from './driver-list.component';
 
@@ -8,7 +9,8 @@ describe('DriverListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DriverListComponent]
+      imports: [DriverListComponent],
+      providers: [provideRouter([])]
     })
     .compileComponents();
 

@@ -26,7 +26,7 @@ describe('DeliveryService', () => {
   });
 
   it('should fetch all deliveries', () => {
-    const dummyDeliveries = [{ id: 1, pickupLocation: 'A', dropoffLocation: 'B' }];
+    const dummyDeliveries: any = [{ id: 1, pickupLocation: 'A', dropoffLocation: 'B' }];
     service.getDeliveries().subscribe((data) => {
       expect(data).toEqual(dummyDeliveries);
     });
@@ -37,7 +37,7 @@ describe('DeliveryService', () => {
   });
 
   it('should fetch a delivery by ID', () => {
-    const delivery = { id: 1, pickupLocation: 'X', dropoffLocation: 'Y' };
+    const delivery: any = { id: 1, pickupLocation: 'X', dropoffLocation: 'Y' };
 
     service.getDeliveryById(1).subscribe((data) => {
       expect(data).toEqual(delivery);
@@ -49,7 +49,7 @@ describe('DeliveryService', () => {
   });
 
   it('should add a delivery', () => {
-    const newDelivery = { pickupLocation: 'X', dropoffLocation: 'Y' };
+    const newDelivery: any = { pickupLocation: 'X', dropoffLocation: 'Y' };
 
     service.addDelivery(newDelivery).subscribe((res) => {
       expect(res).toEqual(newDelivery);
@@ -61,7 +61,7 @@ describe('DeliveryService', () => {
   });
 
   it('should update a delivery', () => {
-    const updatedDelivery = { id: 1, pickupLocation: 'A', dropoffLocation: 'B' };
+    const updatedDelivery: any = { id: 1, pickupLocation: 'A', dropoffLocation: 'B' };
 
     service.updateDelivery(1, updatedDelivery).subscribe((res) => {
       expect(res).toEqual(updatedDelivery);
